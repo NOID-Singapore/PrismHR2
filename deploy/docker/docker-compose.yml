@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+
+  redis:
+    container_name: prismhr2-redis
+    image: redis:5.0.4
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--save"]
+
+  db:
+    container_name: prismhr2-postgres
+    image: postgres:11.3
+    environment:
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_USER: prismhr2
+      POSTGRES_DB: prismhr2
+      TZ: Asia/Singapore
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../db/seeds:/docker-entrypoint-initdb.d
+
