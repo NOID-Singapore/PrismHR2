@@ -30,7 +30,7 @@ export const getCount = async (employeeId: string, query?: string, filterBy?: st
 
   const result: CountQueryReturn = await sequelize.query(
     `SELECT count(*)
-    FROM prismhr."Pay"
+    FROM prismhr2."Pay"
     ${where}`,
     {
       type: QueryTypes.SELECT
@@ -54,7 +54,7 @@ export const get = async (
 
   const result: PayResponseModel[] = await sequelize.query(
     `SELECT *
-    FROM prismhr."Pay"
+    FROM prismhr2."Pay"
     ${where}
      ORDER BY 
      "monthYear" DESC
@@ -154,8 +154,8 @@ export const getDataToExport = async (selectedMonth: string) => {
 export const getEmployeePayBySelectedMonth = async (selectedMonth: string): Promise<EmployeeDetailsPayResponseModel[]> => {
   const result: EmployeeDetailsPayResponseModel[] = await sequelize.query(
     `SELECT e.id, e.name, e.type, e."basicSalary", e."workHourPerDay", e."offDayPerMonth", p."monthYear", p."hourPayRate", p."otPayRate", p."totalRegularHours", p."totalExtraDays", p."totalOtHours", p."totalHours", p."totalRegularPay", p."totalExtraDaysPay", p."totalOtPay", p."totalPay"
-    FROM prismhr."Employee" AS e
-    LEFT JOIN prismhr."Pay" AS p ON p."EmployeeId" = e.id
+    FROM prismhr2."Employee" AS e
+    LEFT JOIN prismhr2."Pay" AS p ON p."EmployeeId" = e.id
     AND to_date(p."monthYear",'MM/yyyy') = to_date('${escape(format(new Date(selectedMonth), 'MM/yyyy'))}','MM/yyyy')
      ORDER BY 
      e."name" ASC`,

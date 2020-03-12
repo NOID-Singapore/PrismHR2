@@ -29,7 +29,7 @@ export const getCount = async (employeeId: string, query?: string, filterBy?: st
 
   const result: CountQueryReturn = await sequelize.query(
     `SELECT count(*)
-    FROM prismhr."Attendance"
+    FROM prismhr2."Attendance"
     ${where}`,
     {
       type: QueryTypes.SELECT
@@ -53,7 +53,7 @@ export const get = async (
 
   const result: AttendanceResponseModel[] = await sequelize.query(
     `SELECT *
-    FROM prismhr."Attendance"
+    FROM prismhr2."Attendance"
     ${where}
      ORDER BY 
      "shiftDate" DESC
@@ -127,7 +127,7 @@ export const getTotalWorkDaysInMonth = async (EmployeeId: string, shiftDate: str
   const lastDate = format(new Date(period.getFullYear(), period.getMonth() + 1, 0), 'yyyy-MM-dd');
   const result: CountQueryReturn = await sequelize.query(
     `SELECT DISTINCT count(*)
-    FROM prismhr."Attendance"
+    FROM prismhr2."Attendance"
     WHERE "EmployeeId"= '${EmployeeId}' AND "shiftDate" BETWEEN '${firstDate}' AND '${lastDate}' GROUP BY "attendanceType"`,
     {
       type: QueryTypes.SELECT
@@ -169,7 +169,7 @@ export const createAttendace = async (
 export const getEmployeeAttendanceBySelectedMonth = async (selectedMonth: string): Promise<EmployeeAttendanceToExportResponseModel[]> => {
   const result: EmployeeAttendanceToExportResponseModel[] = await sequelize.query(
     `SELECT "shiftDate", "EmployeeId", string_agg("location", ',' order by location) AS "location", string_agg("totalHour"::character varying, ',' order by location) AS "totalHour"
-     FROM prismhr."Attendance"
+     FROM prismhr2."Attendance"
      WHERE to_char("shiftDate", 'MM/yyyy') = '${escape(format(new Date(selectedMonth), 'MM/yyyy'))}'
      GROUP BY "shiftDate", "EmployeeId"
      ORDER BY 

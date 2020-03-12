@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 WORKDIR=/home/ec2-user/workspace/PrismHR
-S3_BUCKET=prismhr.dev.noid.com.sg
+S3_BUCKET=prismhr2.dev.noid.com.sg
 CLOUDFRONT_ID=E2AZUYMFRNH1BV
 
 # Change CWD

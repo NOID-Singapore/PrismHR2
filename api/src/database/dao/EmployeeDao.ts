@@ -19,8 +19,8 @@ export const get = async (offset: number, limit: number, q?: string): Promise<Em
 
   const result: EmployeeDetailsResponseModel[] = await sequelize.query(
     `SELECT e.*, p."totalRegularHours", p."totalExtraDays", p."totalOtHours", p."totalRegularPay", p."totalExtraDaysPay", p."totalOtPay", p."totalPay"
-    FROM prismhr."Employee" AS e
-    LEFT JOIN prismhr."Pay" AS p ON p."EmployeeId" = e.id
+    FROM prismhr2."Employee" AS e
+    LEFT JOIN prismhr2."Pay" AS p ON p."EmployeeId" = e.id
     ${where}
      ORDER BY 
      e."name" ASC
@@ -38,8 +38,8 @@ export const getCount = async (q?: string): Promise<number> => {
 
   const result: CountQueryReturn = await sequelize.query(
     `SELECT count(*)
-    FROM prismhr."Employee" AS e
-    LEFT JOIN prismhr."Pay" AS p ON p."EmployeeId" = e.id
+    FROM prismhr2."Employee" AS e
+    LEFT JOIN prismhr2."Pay" AS p ON p."EmployeeId" = e.id
      ${where}
      `,
     {
