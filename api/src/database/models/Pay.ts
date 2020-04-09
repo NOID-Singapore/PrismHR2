@@ -10,6 +10,9 @@ export default class Pay extends ModelBase {
   public otPayRate!: number;
   public totalRegularHours!: number;
   public totalExtraDays?: number;
+  public toolbox?: number;
+  public travel?: number;
+  public lunchHours?: number;
   public totalOtHours?: number;
   public totalHours!: number;
   public totalRegularPay!: number;
@@ -42,6 +45,18 @@ export default class Pay extends ModelBase {
         },
         totalExtraDays: {
           type: DataTypes.INTEGER,
+          allowNull: true
+        },
+        toolbox: {
+          type: DataTypes.INTEGER,
+          allowNull: true
+        },
+        travel: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        lunchHours: {
+          type: DataTypes.FLOAT,
           allowNull: true
         },
         totalOtHours: {

@@ -67,82 +67,44 @@ const CsvDropZone: FC<Props> = props => {
         reader.onload = () => {
           setIsLoading(true);
           const csvObject = csvToJson(`${reader.result}`, delimeter);
-          if (attendanceType === 'SATS') {
-            let index = 0;
-            csvObject.map(object => {
-              index++;
-              const shiftDate = `${Object.values(object)[3]}`.replace(/"/g, '');
-              if (shiftDate === 'undefined') {
-                setOpenSnackbar(true);
-                setSnackbarVarient('error');
-                handleSetMessageError('CSV format wrong');
-              } else {
-                setOpenSnackbar(true);
-                setSnackbarVarient('success');
-                handleSetMessageSuccess('CSV format correct');
-                const shiftStartTime = `${Object.values(object)[4]}`.replace(/"/g, '');
-                const shiftEndTime = `${Object.values(object)[5]}`.replace(/"/g, '');
-                const totalHour = `${Object.values(object)[14]}`.replace(/"/g, '');
-                const location = `${Object.values(object)[0]}`.replace(/"/g, '');
-                const EmployeeId = `${Object.values(object)[1]}`.replace(/"/g, '');
 
-                const totalHourSplit = totalHour.split('.');
-                const totalWorkInMinutes = hoursConvertToMinutes(Number(totalHourSplit[0]), Number(totalHourSplit[1]));
-                const totalWorkInHours = minutesConvertToHours(totalWorkInMinutes);
+          let index = 0;
+          csvObject.map(object => {
+            index++;
+            const getDate = `${Object.values(object)[3]}`.split(' ');
+            if (getDate[0] === 'undefined') {
+              setOpenSnackbar(true);
+              setSnackbarVarient('error');
+              handleSetMessageError('CSV format wrong');
+            } else {
+              setOpenSnackbar(true);
+              setSnackbarVarient('success');
+              handleSetMessageSuccess('CSV format correct');
 
-                attandances.push({
-                  shiftDate: format(parse(shiftDate, 'dd/MM/yyyy', new Date()), 'yyyy-MM-dd'),
-                  attendanceType,
-                  shiftStartTime,
-                  shiftEndTime,
-                  totalHour: totalHourSplit.length > 1 ? totalWorkInHours.hours : Number(totalHour),
-                  location,
-                  EmployeeId
-                });
-              }
-              return attandances;
-            });
-            setDataToImport(attandances);
-            index === csvObject.length ? setIsLoading(false) : setIsLoading(true);
-          } else {
-            let index = 0;
-            csvObject.map(object => {
-              index++;
-              const getDate = `${Object.values(object)[3]}`.split(' ');
-              if (getDate[0] === 'undefined') {
-                setOpenSnackbar(true);
-                setSnackbarVarient('error');
-                handleSetMessageError('CSV format wrong');
-              } else {
-                setOpenSnackbar(true);
-                setSnackbarVarient('success');
-                handleSetMessageSuccess('CSV format correct');
+              const shiftDate = getDate[0].replace(/"/g, '');
+              const shiftStartTime = `${Object.values(object)[5]}`.replace(/"/g, '');
+              const shiftEndTime = `${Object.values(object)[6]}`.replace(/"/g, '');
+              const totalHour = `${Object.values(object)[7]}`.replace(/"/g, '');
+              const location = `${Object.values(object)[15]}`.replace(/"/g, '');
+              const EmployeeId = `${Object.values(object)[0]}`.replace(/"/g, '');
 
-                const shiftDate = getDate[0].replace(/"/g, '');
-                const shiftStartTime = `${Object.values(object)[5]}`.replace(/"/g, '');
-                const shiftEndTime = `${Object.values(object)[6]}`.replace(/"/g, '');
-                const totalHour = `${Object.values(object)[7]}`.replace(/"/g, '');
-                const location = `${Object.values(object)[15]}`.replace(/"/g, '');
-                const EmployeeId = `${Object.values(object)[0]}`.replace(/"/g, '');
-
-                const totalHourSplit = totalHour.split(':');
-                const totalWorkInMinutes = hoursConvertToMinutes(Number(totalHourSplit[0]), Number(totalHourSplit[1]));
-                const totalWorkInHours = minutesConvertToHours(totalWorkInMinutes);
-                attandances.push({
-                  shiftDate: format(parse(shiftDate, 'MM/dd/yyyy', new Date()), 'yyyy-MM-dd'),
-                  attendanceType,
-                  shiftStartTime,
-                  shiftEndTime,
-                  totalHour: totalHourSplit.length > 1 ? totalWorkInHours.hours : Number(totalHour),
-                  location,
-                  EmployeeId
-                });
-              }
-              return attandances;
-            });
-            setDataToImport(attandances);
-            index === csvObject.length ? setIsLoading(false) : setIsLoading(true);
-          }
+              const totalHourSplit = totalHour.split(':');
+              const totalWorkInMinutes = hoursConvertToMinutes(Number(totalHourSplit[0]), Number(totalHourSplit[1]));
+              const totalWorkInHours = minutesConvertToHours(totalWorkInMinutes);
+              attandances.push({
+                shiftDate: format(parse(shiftDate, 'MM/dd/yyyy', new Date()), 'yyyy-MM-dd'),
+                attendanceType,
+                shiftStartTime,
+                shiftEndTime,
+                totalHour: totalHourSplit.length > 1 ? totalWorkInHours.hours : Number(totalHour),
+                location,
+                EmployeeId
+              });
+            }
+            return attandances;
+          });
+          setDataToImport(attandances);
+          index === csvObject.length ? setIsLoading(false) : setIsLoading(true);
         };
         reader.readAsText(file);
       }

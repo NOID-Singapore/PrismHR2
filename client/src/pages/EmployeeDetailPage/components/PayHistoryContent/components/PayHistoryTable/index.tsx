@@ -32,6 +32,9 @@ const PayHistoryTable: FC<Props> = props => {
     otPayRate: 0,
     totalRegularHours: 0,
     totalExtraDays: 0,
+    toolbox: 0,
+    travel: 0,
+    lunchHours: 0,
     totalOtHours: 0,
     totalHours: 0,
     totalRegularPay: 0,
@@ -66,15 +69,18 @@ const PayHistoryTable: FC<Props> = props => {
           <HeaderRow
             headers={[
               { label: 'Month', pR: '10px', verticalAlign: 'top' },
-              { label: 'Hour Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'OT Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Reg. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total Extra Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total Ot. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Toolbox', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Travel', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Lunch Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'OT Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Extra Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total PH Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Reg. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Extra Days Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total Ot. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total OT Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total PH Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Pay', pL: '10px', pR: '10px', verticalAlign: 'top' }
             ]}
           />

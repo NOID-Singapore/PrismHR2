@@ -73,12 +73,12 @@ const AttandanceUploadModal: FC<Props> = props => {
     handleSetMessageError
   } = props;
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [attendanceType, setAttendanceType] = useState<string>('SATS');
+  const [attendanceType, setAttendanceType] = useState<string>('DESKERA');
 
   // This is to ensure that the form value and erors are reset/cleared when user canceled the editing
   const handleOnClose = () => {
     handleCancel();
-    setAttendanceType('SATS');
+    setAttendanceType('DESKERA');
     setAttendancesToImport([]);
   };
 
@@ -100,13 +100,13 @@ const AttandanceUploadModal: FC<Props> = props => {
       setSnackbarVarient('success');
       setOpenSnackbar(true);
       handleCancel();
-      setAttendanceType('SATS');
+      setAttendanceType('DESKERA');
     } catch (err) {
       console.log(err);
       handleSetMessageError(`Failed to upload attandance(s)`);
       setSnackbarVarient('error');
       setOpenSnackbar(true);
-      setAttendanceType('SATS');
+      setAttendanceType('DESKERA');
     }
 
     setLoading(false);
@@ -137,27 +137,6 @@ const AttandanceUploadModal: FC<Props> = props => {
         </Grid>
         <form noValidate onSubmit={handleOnSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                variant='outlined'
-                select
-                margin='normal'
-                required
-                fullWidth
-                id='attandancetype'
-                label='Attandance Type'
-                value={attendanceType}
-                onChange={event => setAttendanceType(event.target.value)}
-                autoComplete='off'
-              >
-                <MenuItem key={0} value='SATS'>
-                  SATS
-                </MenuItem>
-                <MenuItem key={1} value='DESKERA'>
-                  DESKERA
-                </MenuItem>
-              </TextField>
-            </Grid>
             <Grid item xs={12}>
               <CsvDropZone
                 label='Attandance(s) CSV File'

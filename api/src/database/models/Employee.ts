@@ -28,6 +28,7 @@ export default class Employee extends ModelBase {
   public basicSalary!: number;
   public hourPayRate?: number;
   public otPayRate?: number;
+  public lunchHours?: number;
   public workHourPerDay!: number;
   public offDayPerMonth!: number;
 
@@ -93,6 +94,10 @@ export default class Employee extends ModelBase {
         },
         otPayRate: {
           type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        lunchHours: {
+          type: DataTypes.INTEGER,
           allowNull: true
         },
         workHourPerDay: {
