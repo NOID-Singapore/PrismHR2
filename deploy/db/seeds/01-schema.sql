@@ -162,7 +162,7 @@ COMMENT ON TABLE prismhr2."Attendance" IS 'Store all of attendance of employee';
 --
 
 ALTER TABLE ONLY prismhr2."Attendance"
-    ADD CONSTRAINT "Attendance_pkey" PRIMARY KEY ("shiftDate", "attendanceType", "EmployeeId");
+    ADD CONSTRAINT "Attendance_pkey" PRIMARY KEY ("shiftDate", "shiftStartTime", "attendanceType", "EmployeeId");
 
 --
 -- Name: Attendance Attendance_fkey; Type: CONSTRAINT; Schema: prismhr2; Owner: prismhr2

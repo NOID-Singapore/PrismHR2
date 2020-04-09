@@ -58,7 +58,14 @@ export const createAttendances = async (attendances: AttendanceResponseModel[]) 
 
   try {
     for (const attendanceObject of attendances) {
-      if (!(await isAttendanceExistByShiftDateAndEmployeeId(attendanceObject.shiftDate, attendanceObject.EmployeeId))) {
+      if (
+        !(await isAttendanceExistByShiftDateAndEmployeeId(
+          attendanceObject.shiftDate,
+          attendanceObject.shiftStartTime,
+          attendanceObject.EmployeeId,
+          attendanceObject.attendanceType
+        ))
+      ) {
         await AttendanceDao.createAttendace(
           attendanceObject.shiftDate,
           attendanceObject.attendanceType,
@@ -69,7 +76,6 @@ export const createAttendances = async (attendances: AttendanceResponseModel[]) 
           attendanceObject.EmployeeId
         );
       } else {
-        console.log(attendanceObject.attendanceType);
         await editAttendance(
           attendanceObject.shiftDate,
           attendanceObject.attendanceType,
@@ -97,7 +103,7 @@ export const editAttendance = async (
 ) => {
   LOG.debug('Editing Attendance');
 
-  const attendance = await AttendanceDao.getByShiftDateAndEmployeeIdAndType(shiftDate, EmployeeId, attendanceType);
+  const attendance = await AttendanceDao.getByShiftDateAndEmployeeIdAndType(shiftDate, attendanceType, shiftStartTime, EmployeeId);
 
   if (!attendance) {
     throw new AttendanceNotFountError(EmployeeId);
@@ -110,6 +116,11 @@ export const editAttendance = async (
   }
 };
 
-export const isAttendanceExistByShiftDateAndEmployeeId = async (shiftDate: Date, EmployeeId: string): Promise<boolean> => {
-  return (await AttendanceDao.countByShiftDateAndEmployeeId(shiftDate, EmployeeId)) > 0;
+export const isAttendanceExistByShiftDateAndEmployeeId = async (
+  shiftDate: Date,
+  shiftStartTime: Date,
+  EmployeeId: string,
+  attendanceType: string
+): Promise<boolean> => {
+  return (await AttendanceDao.countByShiftDateAndEmployeeId(shiftDate, attendanceType, shiftStartTime, EmployeeId)) > 0;
 };

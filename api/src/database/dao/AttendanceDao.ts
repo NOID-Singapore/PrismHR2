@@ -114,11 +114,12 @@ export const getByEmployeeIdAndShiftDate = async (EmployeeId: string, shiftDate:
   return model.findAndCountAll({ where: { shiftDate: { [Op.between]: [firstDate, lastDate] }, EmployeeId } });
 };
 
-export const getByShiftDateAndEmployeeIdAndType = async (shiftDate: Date, EmployeeId: string, attendanceType: string) => {
+export const getByShiftDateAndEmployeeIdAndType = async (shiftDate: Date, attendanceType: string, shiftStartTime: Date, EmployeeId: string) => {
   const model = getAttendanceModel();
 
   const shiftDateConvert = format(new Date(shiftDate), 'yyyy-MM-dd');
-  return model.findOne<Attendance>({ where: { shiftDate: shiftDateConvert, EmployeeId, attendanceType } });
+  const shiftStartTimeConvert = format(new Date(shiftDate + ' ' + shiftStartTime), 'HH:mm:ss');
+  return model.findOne<Attendance>({ where: { shiftDate: shiftDateConvert, attendanceType, shiftStartTime: shiftStartTimeConvert, EmployeeId } });
 };
 
 export const getTotalWorkDaysInMonth = async (EmployeeId: string, shiftDate: string) => {
@@ -137,11 +138,12 @@ export const getTotalWorkDaysInMonth = async (EmployeeId: string, shiftDate: str
   return result[0] === undefined ? 0 : result[0].count;
 };
 
-export const countByShiftDateAndEmployeeId = (shiftDate: Date, EmployeeId: string) => {
+export const countByShiftDateAndEmployeeId = (shiftDate: Date, attendanceType: string, shiftStartTime: Date, EmployeeId: string) => {
   const model = getAttendanceModel();
 
   const shiftDateConvert = format(new Date(shiftDate), 'yyyy-MM-dd');
-  return model.count({ where: { shiftDate: shiftDateConvert, EmployeeId } });
+  const shiftStartTimeConvert = format(new Date(shiftDate + ' ' + shiftStartTime), 'HH:mm:ss');
+  return model.count({ where: { shiftDate: shiftDateConvert, attendanceType, shiftStartTime: shiftStartTimeConvert, EmployeeId } });
 };
 
 export const createAttendace = async (

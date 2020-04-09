@@ -35,7 +35,7 @@ export default class Attendance extends ModelBase {
         },
         shiftStartTime: {
           type: DataTypes.TIME,
-          allowNull: false
+          primaryKey: true
         },
         shiftEndTime: {
           type: DataTypes.TIME,
