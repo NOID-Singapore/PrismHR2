@@ -1,5 +1,6 @@
 import Logger from '../Logger';
 import * as AttendanceDao from '../database/dao/AttendanceDao';
+import * as EmployeeDao from '../database/dao/EmployeeDao';
 import AttendanceNotFountError from '../errors/AttendanceNotFountError';
 import { AttendanceResponseModel } from '../typings/ResponseFormats';
 
@@ -66,15 +67,18 @@ export const createAttendances = async (attendances: AttendanceResponseModel[]) 
           attendanceObject.attendanceType
         ))
       ) {
-        await AttendanceDao.createAttendace(
-          attendanceObject.shiftDate,
-          attendanceObject.attendanceType,
-          attendanceObject.shiftStartTime,
-          attendanceObject.shiftEndTime,
-          attendanceObject.totalHour,
-          attendanceObject.location,
-          attendanceObject.EmployeeId
-        );
+        const employee = await EmployeeDao.getById(attendanceObject.EmployeeId);
+        if (employee) {
+          await AttendanceDao.createAttendace(
+            attendanceObject.shiftDate,
+            attendanceObject.attendanceType,
+            attendanceObject.shiftStartTime,
+            attendanceObject.shiftEndTime,
+            attendanceObject.totalHour,
+            attendanceObject.location,
+            attendanceObject.EmployeeId
+          );
+        }
       } else {
         await editAttendance(
           attendanceObject.shiftDate,
