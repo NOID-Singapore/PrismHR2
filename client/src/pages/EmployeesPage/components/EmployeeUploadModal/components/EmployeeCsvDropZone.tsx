@@ -53,22 +53,22 @@ const EmployeeCsvDropZone: FC<Props> = props => {
             const firstName = Object.values(object)[1];
             const middleName = Object.values(object)[2] ? ` ${Object.values(object)[2]}` : '';
             const lastName = Object.values(object)[3] ? ` ${Object.values(object)[3]}` : '';
-            const type = Object.values(object)[4] ? `${Object.values(object)[4]}` : '';
+            const position = Object.values(object)[4] ? `${Object.values(object)[4]}` : '';
             const name = `${firstName}${middleName}${lastName}`;
             const basicSalary = Object.values(object)[5] ? Number(Object.values(object)[5]) : 0;
             const hourPayRate = Object.values(object)[6] ? Number(Object.values(object)[6]) : undefined;
-            const otPayRate = Object.values(object)[7] ? Number(Object.values(object)[7]) : undefined;
-            const workHourPerDay = Object.values(object)[8] ? Number(Object.values(object)[8]) : 0;
-            const offDayPerMonth = Object.values(object)[9] ? Number(Object.values(object)[9]) : 0;
+            const otherDaysPayRate = Object.values(object)[7] ? Number(Object.values(object)[7]) : undefined;
+            const otPayRate = Object.values(object)[7] ? Number(Object.values(object)[9]) : undefined;
+            const workHourPerDay = Object.values(object)[8] ? Number(Object.values(object)[9]) : 0;
             return employees.push({
               id,
               name,
-              type,
+              position,
               basicSalary,
               hourPayRate,
+              otherDaysPayRate,
               otPayRate,
-              workHourPerDay,
-              offDayPerMonth
+              workHourPerDay
             });
           });
           setDataToImport(employees);

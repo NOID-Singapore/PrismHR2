@@ -1,12 +1,13 @@
 interface EmployeeDetailsModel {
   id: string;
   name: string;
-  type: string;
+  position: string;
   basicSalary: number;
   hourPayRate?: number;
+  otherDaysPayRate?: number;
   otPayRate?: number;
+  lunchHours?: number;
   workHourPerDay: number;
-  offDayPerMonth: number;
   totalRegularHours?: number;
   totalExtraDays?: number;
   totalOtHours?: number;

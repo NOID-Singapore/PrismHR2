@@ -52,12 +52,12 @@ const EmployeeDetailPage: FC = () => {
   const dummyEmployee: EmployeeDetailsModel = {
     name: '',
     id: '',
-    type: '',
+    position: '',
     basicSalary: 0,
     hourPayRate: 0,
+    otherDaysPayRate: 0,
     otPayRate: 0,
     workHourPerDay: 0,
-    offDayPerMonth: 0,
     totalRegularHours: 0,
     totalExtraDays: 0,
     totalOtHours: 0,
@@ -88,7 +88,7 @@ const EmployeeDetailPage: FC = () => {
     };
   }, [params]);
 
-  const { name, type, basicSalary, hourPayRate, otPayRate, workHourPerDay, offDayPerMonth } = employee!;
+  const { name, position, basicSalary, hourPayRate, otPayRate, workHourPerDay } = employee!;
 
   let initialName: any = [];
   if (name) {
@@ -144,7 +144,7 @@ const EmployeeDetailPage: FC = () => {
             {isLoadingData ? <Skeleton width={90} /> : `${name}`}
           </Typography>
           <Typography color='primary' variant='h6'>
-            {isLoadingData ? <Skeleton width={90} /> : `${type}`}
+            {isLoadingData ? <Skeleton width={90} /> : `${position}`}
           </Typography>
         </Grid>
       </Grid>
@@ -162,7 +162,7 @@ const EmployeeDetailPage: FC = () => {
             Off Day Per Month:
           </Typography>
           <Typography variant='h6' display='inline'>
-            {isLoadingData ? <Skeleton width={50} /> : <span className={classes.contentTypography}> {offDayPerMonth}</span>}
+            {isLoadingData ? <Skeleton width={50} /> : <span className={classes.contentTypography}> {workHourPerDay}</span>}
           </Typography>
         </Grid>
       </Grid>
