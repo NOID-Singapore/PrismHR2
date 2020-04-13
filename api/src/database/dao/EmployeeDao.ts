@@ -121,23 +121,25 @@ export const getAllEmployee = () => {
 export const createEmployee = async (
   id: string,
   name: string,
-  type: string,
+  position: string,
   basicSalary: number,
   hourPayRate: number,
+  otherDaysPayRate: number,
   otPayRate: number,
-  workHourPerDay: number,
-  offDayPerMonth: number
+  lunchHours: number,
+  workHourPerDay: number
 ) => {
   const model = getEmployeeModel();
 
   return model.create<Employee>({
     id,
     name,
-    type,
+    position,
     basicSalary,
     hourPayRate,
+    otherDaysPayRate,
     otPayRate,
-    workHourPerDay,
-    offDayPerMonth
+    lunchHours,
+    workHourPerDay
   });
 };

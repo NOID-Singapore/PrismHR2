@@ -1,12 +1,13 @@
 export interface EmployeeResponseModel {
   id: string;
   name: string;
-  type: string;
+  position: string;
   basicSalary: number;
   hourPayRate: number;
+  otherDaysPayRate: number;
   otPayRate: number;
+  lunchHours: number;
   workHourPerDay: number;
-  offDayPerMonth: number;
   createdAt?: Date;
   updatedAt?: Date;
 }

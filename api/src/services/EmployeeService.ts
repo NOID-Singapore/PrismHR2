@@ -68,12 +68,13 @@ export const getAllEmployee = async () => {
 export const editEmployee = async (
   id: string,
   name: string,
-  type: string,
+  position: string,
   basicSalary: number,
   hourPayRate: number,
+  otherDaysPayRate: number,
   otPayRate: number,
-  workHourPerDay: number,
-  offDayPerMonth: number
+  lunchHours: number,
+  workHourPerDay: number
 ) => {
   LOG.debug('Editing Employee');
 
@@ -84,7 +85,7 @@ export const editEmployee = async (
   }
 
   try {
-    await employee.update({ name, type, basicSalary, hourPayRate, otPayRate, workHourPerDay, offDayPerMonth });
+    await employee.update({ name, position, basicSalary, hourPayRate, otherDaysPayRate, otPayRate, lunchHours, workHourPerDay });
 
     return await getEmployeeFullDetailsById(id);
   } catch (err) {
@@ -108,23 +109,25 @@ export const createEmployees = async (employees: EmployeeResponseModel[]) => {
         await EmployeeDao.createEmployee(
           employeeObject.id,
           employeeObject.name,
-          employeeObject.type,
+          employeeObject.position,
           employeeObject.basicSalary,
           employeeObject.hourPayRate || null,
+          employeeObject.otherDaysPayRate || null,
           employeeObject.otPayRate || null,
-          employeeObject.workHourPerDay,
-          employeeObject.offDayPerMonth
+          employeeObject.lunchHours || null,
+          employeeObject.workHourPerDay
         );
       } else {
         await editEmployee(
           employeeObject.id,
           employeeObject.name,
-          employeeObject.type,
+          employeeObject.position,
           employeeObject.basicSalary,
           employeeObject.hourPayRate || null,
+          employeeObject.otherDaysPayRate || null,
           employeeObject.otPayRate || null,
-          employeeObject.workHourPerDay,
-          employeeObject.offDayPerMonth
+          employeeObject.lunchHours || null,
+          employeeObject.workHourPerDay
         );
       }
     }

@@ -106,13 +106,13 @@ ALTER TABLE ONLY prismhr2."User"
 CREATE TABLE prismhr2."Employee" (
     id character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
-    type character varying(255) NOT NULL,
+    position character varying(255) NOT NULL,
     "basicSalary" double precision DEFAULT '0'::double precision NOT NULL,
     "hourPayRate" double precision DEFAULT '0'::double precision,
+    "otherDaysPayRate" double precision DEFAULT '0'::double precision,
     "otPayRate" double precision DEFAULT '0'::double precision,
     "lunchHours" double precision DEFAULT '0'::double precision,
     "workHourPerDay" double precision DEFAULT '0'::double precision NOT NULL,
-    "offDayPerMonth" integer NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL
 );
