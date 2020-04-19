@@ -73,7 +73,6 @@ export const editEmployee = async (
   hourPayRate: number,
   otherDaysPayRate: number,
   otPayRate: number,
-  lunchHours: number,
   workHourPerDay: number
 ) => {
   LOG.debug('Editing Employee');
@@ -85,7 +84,7 @@ export const editEmployee = async (
   }
 
   try {
-    await employee.update({ name, position, basicSalary, hourPayRate, otherDaysPayRate, otPayRate, lunchHours, workHourPerDay });
+    await employee.update({ name, position, basicSalary, hourPayRate, otherDaysPayRate, otPayRate, workHourPerDay });
 
     return await getEmployeeFullDetailsById(id);
   } catch (err) {
@@ -114,7 +113,6 @@ export const createEmployees = async (employees: EmployeeResponseModel[]) => {
           employeeObject.hourPayRate || null,
           employeeObject.otherDaysPayRate || null,
           employeeObject.otPayRate || null,
-          employeeObject.lunchHours || null,
           employeeObject.workHourPerDay
         );
       } else {
@@ -126,7 +124,6 @@ export const createEmployees = async (employees: EmployeeResponseModel[]) => {
           employeeObject.hourPayRate || null,
           employeeObject.otherDaysPayRate || null,
           employeeObject.otPayRate || null,
-          employeeObject.lunchHours || null,
           employeeObject.workHourPerDay
         );
       }

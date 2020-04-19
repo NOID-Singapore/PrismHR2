@@ -81,6 +81,9 @@ export const createAttendances = async (attendances: AttendanceResponseModel[]) 
             attendanceObject.attendanceType,
             attendanceObject.shiftStartTime,
             attendanceObject.shiftEndTime,
+            attendanceObject.toolbox,
+            attendanceObject.travel,
+            attendanceObject.lunchHours,
             attendanceObject.totalOTHour,
             attendanceObject.location,
             attendanceObject.EmployeeId
@@ -92,6 +95,9 @@ export const createAttendances = async (attendances: AttendanceResponseModel[]) 
           attendanceObject.attendanceType,
           attendanceObject.shiftStartTime,
           attendanceObject.shiftEndTime,
+          attendanceObject.toolbox,
+          attendanceObject.travel,
+          attendanceObject.lunchHours,
           attendanceObject.totalOTHour,
           attendanceObject.location,
           attendanceObject.EmployeeId
@@ -108,6 +114,9 @@ export const editAttendance = async (
   attendanceType: string,
   shiftStartTime: Date,
   shiftEndTime: Date,
+  toolbox: number,
+  travel: number,
+  lunchHours: number,
   totalOTHour: number,
   location: string,
   EmployeeId: string
@@ -121,7 +130,18 @@ export const editAttendance = async (
   }
 
   try {
-    await attendance.update({ shiftDate, attendanceType, shiftStartTime, shiftEndTime, totalOTHour, location, EmployeeId });
+    await attendance.update({
+      shiftDate,
+      attendanceType,
+      shiftStartTime,
+      shiftEndTime,
+      toolbox,
+      travel,
+      lunchHours,
+      totalOTHour,
+      location,
+      EmployeeId
+    });
   } catch (err) {
     throw err;
   }

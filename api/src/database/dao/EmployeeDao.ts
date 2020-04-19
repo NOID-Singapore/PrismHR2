@@ -126,7 +126,6 @@ export const createEmployee = async (
   hourPayRate: number,
   otherDaysPayRate: number,
   otPayRate: number,
-  lunchHours: number,
   workHourPerDay: number
 ) => {
   const model = getEmployeeModel();
@@ -139,7 +138,6 @@ export const createEmployee = async (
     hourPayRate,
     otherDaysPayRate,
     otPayRate,
-    lunchHours,
     workHourPerDay
   });
 };

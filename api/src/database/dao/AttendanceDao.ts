@@ -167,6 +167,9 @@ export const createAttendace = async (
   attendanceType: string,
   shiftStartTime: Date,
   shiftEndTime: Date,
+  toolbox: number,
+  travel: number,
+  lunchHours: number,
   totalOTHour: number,
   location: string,
   EmployeeId: string
@@ -178,6 +181,9 @@ export const createAttendace = async (
     attendanceType,
     shiftStartTime,
     shiftEndTime,
+    toolbox,
+    travel,
+    lunchHours,
     totalOTHour,
     location,
     EmployeeId
