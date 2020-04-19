@@ -88,7 +88,7 @@ const EmployeeDetailPage: FC = () => {
     };
   }, [params]);
 
-  const { name, position, basicSalary, hourPayRate, otPayRate, workHourPerDay } = employee!;
+  const { name, position, basicSalary, hourPayRate, otherDaysPayRate, otPayRate, workHourPerDay } = employee!;
 
   let initialName: any = [];
   if (name) {
@@ -157,14 +157,6 @@ const EmployeeDetailPage: FC = () => {
             {isLoadingData ? <Skeleton width={50} /> : <span className={classes.contentTypography}> {workHourPerDay}</span>}
           </Typography>
         </Grid>
-        <Grid item>
-          <Typography variant='h6' color='primary' display='inline'>
-            Off Day Per Month:
-          </Typography>
-          <Typography variant='h6' display='inline'>
-            {isLoadingData ? <Skeleton width={50} /> : <span className={classes.contentTypography}> {workHourPerDay}</span>}
-          </Typography>
-        </Grid>
       </Grid>
       <Grid container spacing={2}>
         <Grid item>
@@ -188,6 +180,26 @@ const EmployeeDetailPage: FC = () => {
               <Skeleton width={50} />
             ) : hourPayRate ? (
               <NumberFormat value={hourPayRate} displayType={'text'} thousandSeparator={true} prefix={' $'} className={classes.contentTypography} />
+            ) : (
+              <span className={classes.contentTypography}> $0</span>
+            )}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant='h6' color='primary' display='inline'>
+            Sunday/PH Pay Rate:
+          </Typography>
+          <Typography variant='h6' display='inline'>
+            {isLoadingData ? (
+              <Skeleton width={50} />
+            ) : otPayRate ? (
+              <NumberFormat
+                value={otherDaysPayRate}
+                displayType={'text'}
+                thousandSeparator={true}
+                prefix={' $'}
+                className={classes.contentTypography}
+              />
             ) : (
               <span className={classes.contentTypography}> $0</span>
             )}

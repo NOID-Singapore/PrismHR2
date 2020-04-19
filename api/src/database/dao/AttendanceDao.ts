@@ -138,6 +138,22 @@ export const getTotalWorkDaysInMonth = async (EmployeeId: string, shiftDate: str
   return result[0] === undefined ? 0 : result[0].count;
 };
 
+export const getShiftDateInMonthUnique = async (EmployeeId: string, shiftDate: string) => {
+  const period = new Date(shiftDate);
+  const firstDate = format(new Date(period.getFullYear(), period.getMonth(), 1), 'yyyy-MM-dd');
+  const lastDate = format(new Date(period.getFullYear(), period.getMonth() + 1, 0), 'yyyy-MM-dd');
+  const result: AttendanceResponseModel[] = await sequelize.query(
+    `SELECT DISTINCT "shiftDate", "totalOTHour"
+    FROM prismhr."Attendance"
+    WHERE "EmployeeId"= '${EmployeeId}' AND "shiftDate" BETWEEN '${firstDate}' AND '${lastDate}'`,
+    {
+      type: QueryTypes.SELECT
+    }
+  );
+
+  return result;
+};
+
 export const countByShiftDateAndEmployeeId = (shiftDate: Date, attendanceType: string, shiftStartTime: Date, EmployeeId: string) => {
   const model = getAttendanceModel();
 
@@ -151,7 +167,7 @@ export const createAttendace = async (
   attendanceType: string,
   shiftStartTime: Date,
   shiftEndTime: Date,
-  totalHour: number,
+  totalOTHour: number,
   location: string,
   EmployeeId: string
 ) => {
@@ -162,7 +178,7 @@ export const createAttendace = async (
     attendanceType,
     shiftStartTime,
     shiftEndTime,
-    totalHour,
+    totalOTHour,
     location,
     EmployeeId
   });

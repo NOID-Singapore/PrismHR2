@@ -38,10 +38,46 @@ const searchPayHandler: RequestHandler = async (req, res, next) => {
 };
 
 const calculatePayHandler: RequestHandler = async (req, res, next) => {
+  try {
+    const { selectedMonth } = req.body;
+    const employees = await EmployeeService.getAllEmployee();
+
+    //get holidays date data
+    const { holidays } = await HolidayService.getAllHoliday();
+    const holidayArray: any = [];
+    holidays.map(holiday => {
+      holidayArray.push(holiday.getDataValue('holidayDate'));
+    });
+
+    const promises = employees.map(async employee => {
+      const payData = await PayService.getPayByEmployeeIdAndPeriod(employee.getDataValue('id'), selectedMonth);
+
+      //a basic salary
+      const basicSalary = employee.getDataValue('basicSalary');
+
+      //b sunday/ph pay rate
+      const otherDaysPayRate = employee.getDataValue('otherDaysPayRate');
+
+      //c ot rate
+      const otPayRate = Number((((basicSalary * 12) / (52 * 44)) * 1.5).toFixed(2));
+
+      //d additonal pay
+      let additonalPay = 0;
+
+      //f regular work hours
+      const regularWorkHours = employee.getDataValue('workHourPerDay');
+
+      //Unique Shift Date Attendance
+      const { AttendanceShiftDate } = await AttendanceService.getAttendaceByIdAndShiftDateUnique(employee.getDataValue('id'), selectedMonth);
+
+      //total pay
+      const totalPay = basicSalary + additonalPay;
+    });
+  } catch (err) {
+    LOG.error(err);
+    return next(err);
+  }
   // try {
-  //   const { selectedMonth } = req.body;
-  //   const employees = await EmployeeService.getAllEmployee();
-  //   const { holidays } = await HolidayService.getAllHoliday();
   //   console.log(holidays);
   //   const promises = employees.map(async employee => {
   //     const payData = await PayService.getPayByEmployeeIdAndPeriod(employee.getDataValue('id'), selectedMonth);

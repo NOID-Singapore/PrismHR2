@@ -40,6 +40,13 @@ export const getAttendaceByIdAndShiftDate = async (employeeId: string, shiftDate
   return { Attendances: rows, count };
 };
 
+export const getAttendaceByIdAndShiftDateUnique = async (employeeId: string, shiftDate: string) => {
+  LOG.debug('Getting Attendances Data By Employee ID and unique');
+
+  const rows = await AttendanceDao.getShiftDateInMonthUnique(employeeId, shiftDate);
+  return { AttendanceShiftDate: rows };
+};
+
 export const getTotalWorkDaysInMonth = async (employeeId: string, shiftDate: string) => {
   LOG.debug('Getting Total Work Days In Month Data By Employee ID and shiftDate');
 
@@ -74,7 +81,7 @@ export const createAttendances = async (attendances: AttendanceResponseModel[]) 
             attendanceObject.attendanceType,
             attendanceObject.shiftStartTime,
             attendanceObject.shiftEndTime,
-            attendanceObject.totalHour,
+            attendanceObject.totalOTHour,
             attendanceObject.location,
             attendanceObject.EmployeeId
           );
@@ -85,7 +92,7 @@ export const createAttendances = async (attendances: AttendanceResponseModel[]) 
           attendanceObject.attendanceType,
           attendanceObject.shiftStartTime,
           attendanceObject.shiftEndTime,
-          attendanceObject.totalHour,
+          attendanceObject.totalOTHour,
           attendanceObject.location,
           attendanceObject.EmployeeId
         );
@@ -101,7 +108,7 @@ export const editAttendance = async (
   attendanceType: string,
   shiftStartTime: Date,
   shiftEndTime: Date,
-  totalHour: number,
+  totalOTHour: number,
   location: string,
   EmployeeId: string
 ) => {
@@ -114,7 +121,7 @@ export const editAttendance = async (
   }
 
   try {
-    await attendance.update({ shiftDate, attendanceType, shiftStartTime, shiftEndTime, totalHour, location, EmployeeId });
+    await attendance.update({ shiftDate, attendanceType, shiftStartTime, shiftEndTime, totalOTHour, location, EmployeeId });
   } catch (err) {
     throw err;
   }

@@ -15,7 +15,11 @@ export default class Attendance extends ModelBase {
   public attendanceType!: AttendanceType;
   public shiftStartTime!: Date;
   public shiftEndTime!: Date;
-  public totalHour!: number;
+  public toolbox?: number;
+  public travel?: number;
+  public lunchHours?: number;
+
+  public totalOTHour!: number;
   public location?: string;
 
   // timestamp
@@ -41,7 +45,19 @@ export default class Attendance extends ModelBase {
           type: DataTypes.TIME,
           allowNull: false
         },
-        totalHour: {
+        toolbox: {
+          type: DataTypes.INTEGER,
+          allowNull: true
+        },
+        travel: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        lunchHours: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        totalOTHour: {
           type: DataTypes.FLOAT,
           allowNull: false
         },
@@ -73,14 +89,29 @@ export default class Attendance extends ModelBase {
   }
 
   public toResponseFormat(): AttendanceResponseModel {
-    const { shiftDate, attendanceType, shiftStartTime, shiftEndTime, totalHour, location, createdAt, updatedAt } = this;
+    const {
+      shiftDate,
+      attendanceType,
+      shiftStartTime,
+      shiftEndTime,
+      toolbox,
+      travel,
+      lunchHours,
+      totalOTHour,
+      location,
+      createdAt,
+      updatedAt
+    } = this;
 
     return {
       shiftDate,
       attendanceType,
       shiftStartTime,
       shiftEndTime,
-      totalHour,
+      toolbox,
+      travel,
+      lunchHours,
+      totalOTHour,
       location,
       createdAt,
       updatedAt

@@ -6,7 +6,6 @@ export interface EmployeeResponseModel {
   hourPayRate: number;
   otherDaysPayRate: number;
   otPayRate: number;
-  lunchHours: number;
   workHourPerDay: number;
   createdAt?: Date;
   updatedAt?: Date;
@@ -35,7 +34,10 @@ export interface AttendanceResponseModel {
   attendanceType: string;
   shiftStartTime: Date;
   shiftEndTime: Date;
-  totalHour: number;
+  toolbox?: number;
+  travel?: number;
+  lunchHours?: number;
+  totalOTHour: number;
   location?: string;
   EmployeeId?: string;
   createdAt?: Date;
@@ -48,6 +50,9 @@ export interface PayResponseModel {
   otPayRate: number;
   totalRegularHours: number;
   totalExtraDays: number;
+  totalToolbox: number;
+  totalTravel: number;
+  totalLunchHours: number;
   totalOtHours: number;
   totalHours: number;
   totalRegularPay: number;
