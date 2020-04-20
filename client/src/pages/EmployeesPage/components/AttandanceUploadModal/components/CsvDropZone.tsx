@@ -84,19 +84,20 @@ const CsvDropZone: FC<Props> = props => {
               const shiftDate = getDate[0].replace(/"/g, '');
               const shiftStartTime = `${Object.values(object)[5]}`.replace(/"/g, '');
               const shiftEndTime = `${Object.values(object)[6]}`.replace(/"/g, '');
-              const totalHour = `${Object.values(object)[7]}`.replace(/"/g, '');
+              const totalOtHour = `${Object.values(object)[10]}`.replace(/"/g, '');
               const location = `${Object.values(object)[15]}`.replace(/"/g, '');
               const EmployeeId = `${Object.values(object)[0]}`.replace(/"/g, '');
 
-              const totalHourSplit = totalHour.split(':');
-              const totalWorkInMinutes = hoursConvertToMinutes(Number(totalHourSplit[0]), Number(totalHourSplit[1]));
-              const totalWorkInHours = minutesConvertToHours(totalWorkInMinutes);
+              console.log('total OT', totalOtHour);
+              // const totalHourSplit = totalHour.split(':');
+              // const totalWorkInMinutes = hoursConvertToMinutes(Number(totalHourSplit[0]), Number(totalHourSplit[1]));
+              // const totalWorkInHours = minutesConvertToHours(totalWorkInMinutes);
               attandances.push({
                 shiftDate: format(parse(shiftDate, 'MM/dd/yyyy', new Date()), 'yyyy-MM-dd'),
                 attendanceType,
                 shiftStartTime,
                 shiftEndTime,
-                totalHour: totalHourSplit.length > 1 ? totalWorkInHours.hours : Number(totalHour),
+                totalOtHour: Number(totalOtHour),
                 location,
                 EmployeeId
               });

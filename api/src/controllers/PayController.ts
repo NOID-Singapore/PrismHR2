@@ -61,250 +61,166 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
       //c ot rate
       const otPayRate = Number((((basicSalary * 12) / (52 * 44)) * 1.5).toFixed(2));
 
+      //totalRegularDays
+      let totalRegularDays = 0;
+
+      //totalExtraDays
+      let totalExtraDays = 0;
+
+      //totalPhDays
+      let totalPhDays = 0;
+
+      //totalToolbox
+      let totalToolbox = 0;
+
+      //totalTravel
+      let totalTravel = 0;
+
+      //totalLunchHours
+      let totalLunchHours = 0;
+
+      //totalOtHours
+      let totalOtHours = 0;
+
+      //totalRegularPay
+      let totalRegularPay = 0;
+
+      //totalExtraDaysPay
+      let totalExtraDaysPay = 0;
+
+      //totalPhDaysPay
+      let totalPhDaysPay = 0;
+
       //d additonal pay
       let additonalPay = 0;
 
       //f regular work hours
-      const regularWorkHours = employee.getDataValue('workHourPerDay');
+      // const regularWorkHours = employee.getDataValue('workHourPerDay');
 
       //Unique Shift Date Attendance
       const { AttendanceShiftDate } = await AttendanceService.getAttendaceByIdAndShiftDateUnique(employee.getDataValue('id'), selectedMonth);
 
+      if (holidayArray.length > 0) {
+        holidayArray.map((holiday: any) => {
+          AttendanceShiftDate.map(attendance => {
+            const convertToDate = new Date(attendance.shiftDate);
+            const getDay = convertToDate.getDay();
+            if (getDay === 0) {
+              totalExtraDays++;
+              totalOtHours = totalOtHours + attendance.totalOtHour;
+              additonalPay = additonalPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
+              totalExtraDaysPay = totalExtraDaysPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
+            } else if (attendance.shiftDate === holiday) {
+              totalPhDays++;
+              totalOtHours = totalOtHours + attendance.totalOtHour;
+              additonalPay = additonalPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
+              totalPhDaysPay = totalPhDaysPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
+            } else {
+              totalRegularDays++;
+              if (attendance.totalOtHour > 1.3) {
+                totalToolbox = totalToolbox + 1;
+                totalTravel = totalTravel + 0.3;
+                const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
+                totalLunchHours = totalLunchHours + lunchHours;
+                const otHours = attendance.totalOtHour - 1 - 0.3 - lunchHours;
+                totalOtHours = totalOtHours + otHours;
+                additonalPay = additonalPay + otHours * otPayRate;
+                totalRegularPay = totalRegularPay + otHours * otPayRate;
+              } else {
+                totalToolbox = totalToolbox + attendance.totalOtHour;
+                totalOtHours = totalOtHours + attendance.totalOtHour;
+                additonalPay = additonalPay + attendance.totalOtHour * otPayRate;
+                totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
+              }
+            }
+          });
+        });
+      } else {
+        AttendanceShiftDate.map(attendance => {
+          const convertToDate = new Date(attendance.shiftDate);
+          const getDay = convertToDate.getDay();
+          if (getDay === 0) {
+            totalExtraDays++;
+            totalOtHours = totalOtHours + attendance.totalOtHour;
+            additonalPay = additonalPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
+            totalExtraDaysPay = totalExtraDaysPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
+          } else {
+            totalRegularDays++;
+            if (attendance.totalOtHour > 1.3) {
+              totalToolbox = totalToolbox + 1;
+              totalTravel = totalTravel + 0.3;
+              const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
+              totalLunchHours = totalLunchHours + lunchHours;
+              const otHours = attendance.totalOtHour - 1 - 0.3 - lunchHours;
+              totalOtHours = totalOtHours + otHours;
+              additonalPay = additonalPay + otHours * otPayRate;
+              totalRegularPay = totalRegularPay + otHours * otPayRate;
+            } else {
+              totalToolbox = totalToolbox + attendance.totalOtHour;
+              totalOtHours = totalOtHours + attendance.totalOtHour;
+              additonalPay = additonalPay + attendance.totalOtHour * otPayRate;
+              totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
+            }
+          }
+        });
+      }
+
       //total pay
       const totalPay = basicSalary + additonalPay;
+
+      console.log(employee.getDataValue('id'));
+      console.log(totalPay);
+
+      if (payData === null) {
+        await PayService.createPay(
+          selectedMonth,
+          employee.getDataValue('hourPayRate') === null ? 0 : employee.getDataValue('hourPayRate'),
+          otPayRate,
+          totalRegularDays,
+          totalExtraDays,
+          totalPhDays,
+          totalToolbox,
+          totalTravel,
+          totalLunchHours,
+          totalOtHours,
+          totalOtHours,
+          totalRegularPay,
+          totalExtraDaysPay,
+          totalPhDaysPay,
+          additonalPay,
+          totalPay,
+          employee.getDataValue('id')
+        );
+      } else {
+        await PayService.editPay(
+          selectedMonth,
+          employee.getDataValue('hourPayRate') === null ? 0 : employee.getDataValue('hourPayRate'),
+          otPayRate,
+          totalRegularDays,
+          totalExtraDays,
+          totalPhDays,
+          totalToolbox,
+          totalTravel,
+          totalLunchHours,
+          totalOtHours,
+          totalOtHours,
+          totalRegularPay,
+          totalExtraDaysPay,
+          totalPhDaysPay,
+          additonalPay,
+          totalPay,
+          employee.getDataValue('id')
+        );
+      }
+    });
+    Promise.all(promises).then(async () => {
+      const { employeePay, employeeAttendance } = await PayService.getEmployeePayBySelectedMonth(selectedMonth);
+      return res.status(OK).json({ employeePay, employeeAttendance });
     });
   } catch (err) {
     LOG.error(err);
     return next(err);
   }
-  // try {
-  //   console.log(holidays);
-  //   const promises = employees.map(async employee => {
-  //     const payData = await PayService.getPayByEmployeeIdAndPeriod(employee.getDataValue('id'), selectedMonth);
-  //     //a
-  //     const basicSalary = employee.getDataValue('basicSalary');
-  //     //g
-  //     const { Attendances } = await AttendanceService.getAttendaceByIdAndShiftDate(employee.getDataValue('id'), selectedMonth);
-  //     let totalWorkHourInMonth = 0;
-  //     Attendances.map(attendance => {
-  //       totalWorkHourInMonth = totalWorkHourInMonth + attendance.getDataValue('totalHour');
-  //     });
-  //     const numberDaysInMonth = new Date(new Date(selectedMonth).getFullYear(), new Date(selectedMonth).getMonth() + 1, 0).getDate();
-  //     //z
-  //     const numberOffDaysInMonth = employee.getDataValue('offDayPerMonth');
-  //     //d
-  //     const totalWorkDaysInMonth = numberDaysInMonth - numberOffDaysInMonth;
-  //     //y
-  //     const regularWorkingHoursInDay = employee.getDataValue('workHourPerDay');
-  //     //e
-  //     const totalRegularWorkHourInMonth = totalWorkDaysInMonth * regularWorkingHoursInDay;
-  //     //i
-  //     const overtimePayRate = employee.getDataValue('otPayRate');
-  //     //c
-  //     const totalOvertimePay = (totalWorkHourInMonth - totalRegularWorkHourInMonth) * overtimePayRate;
-  //     //f (belum pasti)
-  //     const { workDays } = await AttendanceService.getTotalWorkDaysInMonth(employee.getDataValue('id'), selectedMonth);
-  //     //b
-  //     let overtimeDaysPay = 0;
-  //     if (workDays !== 0) {
-  //       overtimeDaysPay = (basicSalary / totalWorkDaysInMonth) * (Number(workDays) - totalWorkDaysInMonth);
-  //     }
-  //     //j
-  //     const overtimeHoursPay =
-  //       (totalWorkHourInMonth - ((Number(workDays) - totalWorkDaysInMonth) * regularWorkingHoursInDay + totalRegularWorkHourInMonth)) *
-  //       overtimePayRate;
-  //     //h
-  //     const hourPayRate = employee.getDataValue('hourPayRate');
-  //     if (payData === null) {
-  //       //Calculate Type 1
-  //       if (employee.getDataValue('type').toUpperCase() === 'WP-PRC' || employee.getDataValue('type').toUpperCase() === 'S-PASS') {
-  //         const totalPay = basicSalary + totalOvertimePay;
-  //         console.log(employee.getDataValue('type'));
-  //         console.log(employee.getDataValue('id'));
-  //         console.log(totalPay);
-  //         await PayService.createPay(
-  //           selectedMonth,
-  //           employee.getDataValue('hourPayRate') === null ? 0 : employee.getDataValue('hourPayRate'),
-  //           overtimePayRate,
-  //           totalRegularWorkHourInMonth,
-  //           null,
-  //           totalWorkHourInMonth - totalRegularWorkHourInMonth,
-  //           totalWorkHourInMonth,
-  //           basicSalary,
-  //           null,
-  //           totalOvertimePay,
-  //           totalPay,
-  //           employee.getDataValue('id')
-  //         );
-  //       }
-  //       //Calculate Type 2
-  //       else if (
-  //         employee.getDataValue('type').toUpperCase() === 'LTVP' ||
-  //         employee.getDataValue('type').toUpperCase() === 'WP-MALAYSIAN' ||
-  //         employee.getDataValue('type').toUpperCase() === 'SINGAPOREAN'
-  //       ) {
-  //         const totalPay = (basicSalary + overtimeDaysPay + overtimeHoursPay).toFixed(2);
-  //         const totalOtPay = overtimeHoursPay <= 0 ? null : (overtimeDaysPay + overtimeHoursPay).toFixed(2);
-  //         console.log(employee.getDataValue('type'));
-  //         console.log(employee.getDataValue('id'));
-  //         console.log(totalPay);
-  //         await PayService.createPay(
-  //           selectedMonth,
-  //           employee.getDataValue('hourPayRate') === null ? 0 : employee.getDataValue('hourPayRate'),
-  //           overtimePayRate,
-  //           totalRegularWorkHourInMonth,
-  //           Number(workDays) - totalWorkDaysInMonth,
-  //           totalWorkHourInMonth - totalRegularWorkHourInMonth,
-  //           totalWorkHourInMonth,
-  //           basicSalary,
-  //           overtimeDaysPay.toFixed(2),
-  //           totalOtPay,
-  //           totalPay,
-  //           employee.getDataValue('id')
-  //         );
-  //       }
-  //       //Calculate Type 3
-  //       else if (employee.getDataValue('type').toUpperCase() === 'HOURLY') {
-  //         const totalPay = totalRegularWorkHourInMonth * hourPayRate + totalOvertimePay;
-  //         console.log(employee.getDataValue('type'));
-  //         console.log(employee.getDataValue('id'));
-  //         console.log(totalPay);
-  //         await PayService.createPay(
-  //           selectedMonth,
-  //           employee.getDataValue('hourPayRate') === null ? 0 : employee.getDataValue('hourPayRate'),
-  //           overtimePayRate,
-  //           totalRegularWorkHourInMonth,
-  //           null,
-  //           totalWorkHourInMonth - totalRegularWorkHourInMonth,
-  //           totalWorkHourInMonth,
-  //           basicSalary,
-  //           null,
-  //           null,
-  //           totalPay,
-  //           employee.getDataValue('id')
-  //         );
-  //       }
-  //       //Calculate Type 4
-  //       else if (employee.getDataValue('type').toUpperCase() === 'DAILY') {
-  //         const totalPay = totalRegularWorkHourInMonth * hourPayRate;
-  //         console.log(employee.getDataValue('type'));
-  //         console.log(employee.getDataValue('id'));
-  //         console.log(totalPay);
-  //         await PayService.createPay(
-  //           selectedMonth,
-  //           employee.getDataValue('hourPayRate') === null ? 0 : employee.getDataValue('hourPayRate'),
-  //           overtimePayRate,
-  //           totalRegularWorkHourInMonth,
-  //           null,
-  //           null,
-  //           totalWorkHourInMonth,
-  //           basicSalary,
-  //           null,
-  //           null,
-  //           totalPay,
-  //           employee.getDataValue('id')
-  //         );
-  //       }
-  //     } else {
-  //       //Calculate Type 1
-  //       if (employee.getDataValue('type').toUpperCase() === 'WP-PRC' || employee.getDataValue('type').toUpperCase() === 'S-PASS') {
-  //         const totalPay = basicSalary + totalOvertimePay;
-  //         console.log(employee.getDataValue('type'));
-  //         console.log(employee.getDataValue('id'));
-  //         console.log(totalPay);
-  //         await PayService.editPay(
-  //           selectedMonth,
-  //           employee.getDataValue('hourPayRate') === null ? 0 : employee.getDataValue('hourPayRate'),
-  //           overtimePayRate,
-  //           totalRegularWorkHourInMonth,
-  //           null,
-  //           totalWorkHourInMonth - totalRegularWorkHourInMonth,
-  //           totalWorkHourInMonth,
-  //           basicSalary,
-  //           null,
-  //           totalOvertimePay,
-  //           totalPay,
-  //           employee.getDataValue('id')
-  //         );
-  //       }
-  //       //Calculate Type 2
-  //       else if (
-  //         employee.getDataValue('type').toUpperCase() === 'LTVP' ||
-  //         employee.getDataValue('type').toUpperCase() === 'WP-MAlAYSIAN' ||
-  //         employee.getDataValue('type').toUpperCase() === 'SINGAPOREAN'
-  //       ) {
-  //         const totalPay = (basicSalary + overtimeDaysPay + overtimeHoursPay).toFixed(2);
-  //         const totalOtPay = overtimeHoursPay <= 0 ? null : (overtimeDaysPay + overtimeHoursPay).toFixed(2);
-  //         console.log(employee.getDataValue('type'));
-  //         console.log(employee.getDataValue('id'));
-  //         console.log(totalPay);
-  //         await PayService.editPay(
-  //           selectedMonth,
-  //           employee.getDataValue('hourPayRate') === null ? 0 : employee.getDataValue('hourPayRate'),
-  //           overtimePayRate,
-  //           totalRegularWorkHourInMonth,
-  //           Number(workDays) - totalWorkDaysInMonth,
-  //           totalWorkHourInMonth - totalRegularWorkHourInMonth,
-  //           totalWorkHourInMonth,
-  //           basicSalary,
-  //           overtimeDaysPay.toFixed(2),
-  //           totalOtPay,
-  //           totalPay,
-  //           employee.getDataValue('id')
-  //         );
-  //       }
-  //       //Calculate Type 3
-  //       else if (employee.getDataValue('type').toUpperCase() === 'HOURLY') {
-  //         const totalPay = totalRegularWorkHourInMonth * hourPayRate + totalOvertimePay;
-  //         console.log(employee.getDataValue('type'));
-  //         console.log(employee.getDataValue('id'));
-  //         console.log(totalPay);
-  //         await PayService.editPay(
-  //           selectedMonth,
-  //           employee.getDataValue('hourPayRate') === null ? 0 : employee.getDataValue('hourPayRate'),
-  //           overtimePayRate,
-  //           totalRegularWorkHourInMonth,
-  //           null,
-  //           totalWorkHourInMonth - totalRegularWorkHourInMonth,
-  //           totalWorkHourInMonth,
-  //           basicSalary,
-  //           null,
-  //           totalOvertimePay,
-  //           totalPay,
-  //           employee.getDataValue('id')
-  //         );
-  //       }
-  //       //Calculate Type 4
-  //       else if (employee.getDataValue('type').toUpperCase() === 'DAILY') {
-  //         const totalPay = totalRegularWorkHourInMonth * hourPayRate;
-  //         console.log(employee.getDataValue('type'));
-  //         console.log(employee.getDataValue('id'));
-  //         console.log(totalPay);
-  //         await PayService.editPay(
-  //           selectedMonth,
-  //           employee.getDataValue('hourPayRate') === null ? 0 : employee.getDataValue('hourPayRate'),
-  //           overtimePayRate,
-  //           totalRegularWorkHourInMonth,
-  //           null,
-  //           null,
-  //           totalWorkHourInMonth,
-  //           basicSalary,
-  //           null,
-  //           null,
-  //           totalPay,
-  //           employee.getDataValue('id')
-  //         );
-  //       }
-  //     }
-  //   });
-  //   Promise.all(promises).then(async () => {
-  //     const { employeePay, employeeAttendance } = await PayService.getEmployeePayBySelectedMonth(selectedMonth);
-  //     return res.status(OK).json({ employeePay, employeeAttendance });
-  //   });
-  // } catch (err) {
-  //   LOG.error(err);
-  //   return next(err);
-  // }
 };
 
 const exportPayHandler: RequestHandler = async (req, res, next) => {

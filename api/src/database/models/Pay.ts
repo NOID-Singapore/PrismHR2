@@ -8,8 +8,9 @@ export default class Pay extends ModelBase {
   public monthYear!: string;
   public hourPayRate!: number;
   public otPayRate!: number;
-  public totalRegularHours!: number;
+  public totalRegularDays!: number;
   public totalExtraDays?: number;
+  public totalPhDays?: number;
   public totalToolbox?: number;
   public totalTravel?: number;
   public totalLunchHours?: number;
@@ -17,6 +18,7 @@ export default class Pay extends ModelBase {
   public totalHours!: number;
   public totalRegularPay!: number;
   public totalExtraDaysPay?: number;
+  public totalPhDaysPay?: number;
   public totalOtPay?: number;
   public totalPay!: number;
 
@@ -39,11 +41,15 @@ export default class Pay extends ModelBase {
           type: DataTypes.FLOAT,
           allowNull: false
         },
-        totalRegularHours: {
-          type: DataTypes.FLOAT,
+        totalRegularDays: {
+          type: DataTypes.INTEGER,
           allowNull: false
         },
         totalExtraDays: {
+          type: DataTypes.INTEGER,
+          allowNull: true
+        },
+        totalPhDays: {
           type: DataTypes.INTEGER,
           allowNull: true
         },
@@ -75,6 +81,10 @@ export default class Pay extends ModelBase {
           type: DataTypes.FLOAT,
           allowNull: true
         },
+        totalPhDaysPay: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
         totalOtPay: {
           type: DataTypes.FLOAT,
           allowNull: true
@@ -96,9 +106,9 @@ export default class Pay extends ModelBase {
         sequelize,
         tableName: 'Pay',
         freezeTableName: true,
-        comment: 'Store all of pay per month of employee'
+        comment: 'Store all of pay per month of employee',
         // DON'T REMOVE THIS COMMENT IF YOU DON'T WANT TO RESYNC/INIT DATABASE
-        // schema: 'prismhr'
+        schema: 'prismhr2'
       }
     );
 

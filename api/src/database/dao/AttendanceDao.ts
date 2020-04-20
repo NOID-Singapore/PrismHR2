@@ -143,8 +143,8 @@ export const getShiftDateInMonthUnique = async (EmployeeId: string, shiftDate: s
   const firstDate = format(new Date(period.getFullYear(), period.getMonth(), 1), 'yyyy-MM-dd');
   const lastDate = format(new Date(period.getFullYear(), period.getMonth() + 1, 0), 'yyyy-MM-dd');
   const result: AttendanceResponseModel[] = await sequelize.query(
-    `SELECT DISTINCT "shiftDate", "totalOTHour"
-    FROM prismhr."Attendance"
+    `SELECT DISTINCT "shiftDate", "totalOtHour"
+    FROM prismhr2."Attendance"
     WHERE "EmployeeId"= '${EmployeeId}' AND "shiftDate" BETWEEN '${firstDate}' AND '${lastDate}'`,
     {
       type: QueryTypes.SELECT
@@ -167,10 +167,8 @@ export const createAttendace = async (
   attendanceType: string,
   shiftStartTime: Date,
   shiftEndTime: Date,
-  toolbox: number,
-  travel: number,
   lunchHours: number,
-  totalOTHour: number,
+  totalOtHour: number,
   location: string,
   EmployeeId: string
 ) => {
@@ -181,10 +179,8 @@ export const createAttendace = async (
     attendanceType,
     shiftStartTime,
     shiftEndTime,
-    toolbox,
-    travel,
     lunchHours,
-    totalOTHour,
+    totalOtHour,
     location,
     EmployeeId
   });
@@ -192,7 +188,7 @@ export const createAttendace = async (
 
 export const getEmployeeAttendanceBySelectedMonth = async (selectedMonth: string): Promise<EmployeeAttendanceToExportResponseModel[]> => {
   const result: EmployeeAttendanceToExportResponseModel[] = await sequelize.query(
-    `SELECT "shiftDate", "EmployeeId", string_agg("location", ',' order by location) AS "location", string_agg("totalHour"::character varying, ',' order by location) AS "totalHour"
+    `SELECT "shiftDate", "EmployeeId", string_agg("location", ',' order by location) AS "location", string_agg("totalOtHour"::character varying, ',' order by location) AS "totalOtHour"
      FROM prismhr2."Attendance"
      WHERE to_char("shiftDate", 'MM/yyyy') = '${escape(format(new Date(selectedMonth), 'MM/yyyy'))}'
      GROUP BY "shiftDate", "EmployeeId"

@@ -81,10 +81,8 @@ export const createAttendances = async (attendances: AttendanceResponseModel[]) 
             attendanceObject.attendanceType,
             attendanceObject.shiftStartTime,
             attendanceObject.shiftEndTime,
-            attendanceObject.toolbox,
-            attendanceObject.travel,
             attendanceObject.lunchHours,
-            attendanceObject.totalOTHour,
+            attendanceObject.totalOtHour,
             attendanceObject.location,
             attendanceObject.EmployeeId
           );
@@ -95,10 +93,8 @@ export const createAttendances = async (attendances: AttendanceResponseModel[]) 
           attendanceObject.attendanceType,
           attendanceObject.shiftStartTime,
           attendanceObject.shiftEndTime,
-          attendanceObject.toolbox,
-          attendanceObject.travel,
           attendanceObject.lunchHours,
-          attendanceObject.totalOTHour,
+          attendanceObject.totalOtHour,
           attendanceObject.location,
           attendanceObject.EmployeeId
         );
@@ -114,10 +110,8 @@ export const editAttendance = async (
   attendanceType: string,
   shiftStartTime: Date,
   shiftEndTime: Date,
-  toolbox: number,
-  travel: number,
   lunchHours: number,
-  totalOTHour: number,
+  totalOtHour: number,
   location: string,
   EmployeeId: string
 ) => {
@@ -135,10 +129,8 @@ export const editAttendance = async (
       attendanceType,
       shiftStartTime,
       shiftEndTime,
-      toolbox,
-      travel,
       lunchHours,
-      totalOTHour,
+      totalOtHour,
       location,
       EmployeeId
     });

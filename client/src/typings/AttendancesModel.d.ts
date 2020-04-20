@@ -3,7 +3,7 @@ interface AttendancesModel {
   attendanceType: string;
   shiftStartTime: Date | string;
   shiftEndTime: Date | string;
-  totalHour: number;
+  totalOtHour: number;
   location?: string;
   EmployeeId?: string;
   createdAt?: Date;

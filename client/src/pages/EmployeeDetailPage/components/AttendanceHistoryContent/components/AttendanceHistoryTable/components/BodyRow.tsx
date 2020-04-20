@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
 const BodyRow: FC<Props> = props => {
   const classes = useStyles();
   const { isLoadingData, attendanceHistory } = props;
-  const { shiftDate, attendanceType, shiftStartTime, shiftEndTime, totalHour, location } = attendanceHistory;
+  const { shiftDate, attendanceType, shiftStartTime, shiftEndTime, totalOtHour, location } = attendanceHistory;
 
   return (
     <Fragment>
@@ -38,7 +38,7 @@ const BodyRow: FC<Props> = props => {
           <Typography variant='body1'>{isLoadingData ? <Skeleton width={60} /> : shiftEndTime}</Typography>
         </BodyCell>
         <BodyCell cellWidth='15%' pL='10px' pR='10px' isComponent={true}>
-          <Typography variant='body1'>{isLoadingData ? <Skeleton width={50} /> : totalHour}</Typography>
+          <Typography variant='body1'>{isLoadingData ? <Skeleton width={50} /> : totalOtHour}</Typography>
         </BodyCell>
         <BodyCell cellWidth='17%' pL='10px' pR='10px' isComponent={true}>
           <Typography variant='body1'>{isLoadingData ? <Skeleton width={100} /> : location}</Typography>

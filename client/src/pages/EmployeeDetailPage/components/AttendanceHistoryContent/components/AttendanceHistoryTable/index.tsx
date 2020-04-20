@@ -31,7 +31,7 @@ const EmploymentHistoryTable: FC<Props> = props => {
     attendanceType: '',
     shiftStartTime: new Date(),
     shiftEndTime: new Date(),
-    totalHour: 0,
+    totalOtHour: 0,
     location: '',
     createdAt: new Date(),
     updatedAt: new Date()

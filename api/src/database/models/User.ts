@@ -49,9 +49,9 @@ export default class User extends ModelBase {
         sequelize,
         tableName: 'User',
         freezeTableName: true,
-        comment: 'User stores all user information'
+        comment: 'User stores all user information',
         // DON'T REMOVE THIS COMMENT IF YOU DON'T WANT TO RESYNC/INIT DATABASE
-        // schema: 'prismhr'
+        schema: 'prismhr2'
       }
     );
 

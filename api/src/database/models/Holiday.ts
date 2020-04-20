@@ -33,9 +33,9 @@ export default class Holiday extends ModelBase {
         sequelize,
         tableName: 'Holiday',
         freezeTableName: true,
-        comment: 'Store public holiday data'
+        comment: 'Store public holiday data',
         // DON'T REMOVE THIS COMMENT IF YOU DON'T WANT TO RESYNC/INIT DATABASE
-        // schema: 'prismhr'
+        schema: 'prismhr2'
       }
     );
     return this;

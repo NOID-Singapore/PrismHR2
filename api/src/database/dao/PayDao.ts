@@ -114,12 +114,17 @@ export const createPay = async (
   monthYear: string,
   hourPayRate: number,
   otPayRate: number,
-  totalRegularHours: number,
+  totalRegularDays: number,
   totalExtraDays: number,
+  totalPhDays: number,
+  totalToolbox: number | string,
+  totalTravel: number | string,
+  totalLunchHours: number | string,
   totalOtHours: number,
   totalHours: number,
   totalRegularPay: number,
   totalExtraDaysPay: number | string,
+  totalPhDaysPay: number | string,
   totalOtPay: number | string,
   totalPay: number | string,
   EmployeeId: string
@@ -130,12 +135,17 @@ export const createPay = async (
     monthYear: format(new Date(monthYear), 'MM/yyyy'),
     hourPayRate,
     otPayRate,
-    totalRegularHours,
+    totalRegularDays,
     totalExtraDays,
+    totalPhDays,
+    totalToolbox,
+    totalTravel,
+    totalLunchHours,
     totalOtHours,
     totalHours,
     totalRegularPay,
     totalExtraDaysPay,
+    totalPhDaysPay,
     totalOtPay,
     totalPay,
     EmployeeId
@@ -153,7 +163,7 @@ export const getDataToExport = async (selectedMonth: string) => {
 
 export const getEmployeePayBySelectedMonth = async (selectedMonth: string): Promise<EmployeeDetailsPayResponseModel[]> => {
   const result: EmployeeDetailsPayResponseModel[] = await sequelize.query(
-    `SELECT e.id, e.name, e.type, e."basicSalary", e."workHourPerDay", e."offDayPerMonth", p."monthYear", p."hourPayRate", p."otPayRate", p."totalRegularHours", p."totalExtraDays", p."totalOtHours", p."totalHours", p."totalRegularPay", p."totalExtraDaysPay", p."totalOtPay", p."totalPay"
+    `SELECT e.id, e.name, e.position, e."basicSalary", p."monthYear", p."hourPayRate", p."otPayRate", p."totalRegularDays", p."totalExtraDays", p."totalPhDays", p."totalToolbox", p."totalTravel", p."totalLunchHours", p."totalOtHours", p."totalHours", p."totalRegularPay", p."totalExtraDaysPay", p."totalPhDaysPay", p."totalOtPay", p."totalPay"
     FROM prismhr2."Employee" AS e
     LEFT JOIN prismhr2."Pay" AS p ON p."EmployeeId" = e.id
     AND to_date(p."monthYear",'MM/yyyy') = to_date('${escape(format(new Date(selectedMonth), 'MM/yyyy'))}','MM/yyyy')

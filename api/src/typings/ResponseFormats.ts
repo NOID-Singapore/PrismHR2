@@ -34,10 +34,8 @@ export interface AttendanceResponseModel {
   attendanceType: string;
   shiftStartTime: Date;
   shiftEndTime: Date;
-  toolbox?: number;
-  travel?: number;
   lunchHours?: number;
-  totalOTHour: number;
+  totalOtHour: number;
   location?: string;
   EmployeeId?: string;
   createdAt?: Date;

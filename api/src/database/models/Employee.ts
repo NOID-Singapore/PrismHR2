@@ -108,9 +108,9 @@ export default class Employee extends ModelBase {
         sequelize,
         tableName: 'Employee',
         freezeTableName: true,
-        comment: 'Store all of employee data'
+        comment: 'Store all of employee data',
         // DON'T REMOVE THIS COMMENT IF YOU DON'T WANT TO RESYNC/INIT DATABASE
-        // schema: 'prismhr'
+        schema: 'prismhr2'
       }
     );
 

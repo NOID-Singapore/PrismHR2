@@ -15,11 +15,8 @@ export default class Attendance extends ModelBase {
   public attendanceType!: AttendanceType;
   public shiftStartTime!: Date;
   public shiftEndTime!: Date;
-  public toolbox?: number;
-  public travel?: number;
   public lunchHours?: number;
-
-  public totalOTHour!: number;
+  public totalOtHour!: number;
   public location?: string;
 
   // timestamp
@@ -45,19 +42,11 @@ export default class Attendance extends ModelBase {
           type: DataTypes.TIME,
           allowNull: false
         },
-        toolbox: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        travel: {
-          type: DataTypes.FLOAT,
-          allowNull: true
-        },
         lunchHours: {
           type: DataTypes.FLOAT,
           allowNull: true
         },
-        totalOTHour: {
+        totalOtHour: {
           type: DataTypes.FLOAT,
           allowNull: false
         },
@@ -79,9 +68,9 @@ export default class Attendance extends ModelBase {
         sequelize,
         tableName: 'Attendance',
         freezeTableName: true,
-        comment: 'Store all of attendance of employee'
+        comment: 'Store all of attendance of employee',
         // DON'T REMOVE THIS COMMENT IF YOU DON'T WANT TO RESYNC/INIT DATABASE
-        // schema: 'prismhr'
+        schema: 'prismhr2'
       }
     );
 
@@ -89,29 +78,15 @@ export default class Attendance extends ModelBase {
   }
 
   public toResponseFormat(): AttendanceResponseModel {
-    const {
-      shiftDate,
-      attendanceType,
-      shiftStartTime,
-      shiftEndTime,
-      toolbox,
-      travel,
-      lunchHours,
-      totalOTHour,
-      location,
-      createdAt,
-      updatedAt
-    } = this;
+    const { shiftDate, attendanceType, shiftStartTime, shiftEndTime, lunchHours, totalOtHour, location, createdAt, updatedAt } = this;
 
     return {
       shiftDate,
       attendanceType,
       shiftStartTime,
       shiftEndTime,
-      toolbox,
-      travel,
       lunchHours,
-      totalOTHour,
+      totalOtHour,
       location,
       createdAt,
       updatedAt
