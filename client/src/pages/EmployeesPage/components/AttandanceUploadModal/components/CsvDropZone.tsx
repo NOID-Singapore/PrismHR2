@@ -5,7 +5,6 @@ import { useDropzone } from 'react-dropzone';
 import { CircularProgress, Grid, makeStyles, Paper, RootRef, Theme, Typography } from '@material-ui/core';
 import { csvToJson } from 'utils';
 import { format, parse } from 'date-fns';
-import { minutesConvertToHours, hoursConvertToMinutes } from 'utils';
 
 interface Props {
   label: string;
@@ -88,10 +87,6 @@ const CsvDropZone: FC<Props> = props => {
               const location = `${Object.values(object)[15]}`.replace(/"/g, '');
               const EmployeeId = `${Object.values(object)[0]}`.replace(/"/g, '');
 
-              console.log('total OT', totalOtHour);
-              // const totalHourSplit = totalHour.split(':');
-              // const totalWorkInMinutes = hoursConvertToMinutes(Number(totalHourSplit[0]), Number(totalHourSplit[1]));
-              // const totalWorkInHours = minutesConvertToHours(totalWorkInMinutes);
               attandances.push({
                 shiftDate: format(parse(shiftDate, 'MM/dd/yyyy', new Date()), 'yyyy-MM-dd'),
                 attendanceType,

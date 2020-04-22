@@ -9,6 +9,7 @@ import EmployeeTable from './components/EmployeeTable';
 import ActionSnackBar from 'components/ActionSnackBar';
 import EmployeeUploadModal from './components/EmployeeUploadModal';
 import AttandanceUploadModal from './components/AttandanceUploadModal';
+import AttendanceLunchHourModal from './components/AttendanceLunchHourModal';
 import CalculateAndExportPopper from './components/CalculateAndExportPopper';
 import DialogPaper from './components/DialogPaper';
 import imageLoader from 'images/imageLoader.gif';
@@ -16,6 +17,7 @@ import HeaderForExportDeskeraEmployeePay from 'typings/enum/HeaderForExportDeske
 
 import UploadIcon from '@material-ui/icons/PersonAdd';
 import UploadDocIcon from '@material-ui/icons/InsertDriveFile';
+import AddLunchHourIcon from '@material-ui/icons/Alarm';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 
@@ -121,6 +123,8 @@ const EmployeesPage: FC = () => {
   const [openUploadAttandanceForm, setOpenUploadAttandanceForm] = useState<boolean>(false);
   const [attendancesToImport, setAttendancesToImport] = useState<AttendancesModel[]>([]);
   const [attendancesToImportError, setAttendancesToImportError] = useState<string>('');
+
+  const [openAttandanceLunchHourForm, setOpenAttandanceLunchHourForm] = useState<boolean>(false);
 
   const [anchorElCalculate, setAnchorElCalculate] = useState<HTMLButtonElement | null>(null);
   const [openCalculatePopper, setOpenCalculatePopper] = useState<boolean>(false);
@@ -251,6 +255,14 @@ const EmployeesPage: FC = () => {
     setOpenUploadAttandanceForm(false);
   };
 
+  const handleOpenAttendanceLunchHourForm = () => {
+    setOpenAttandanceLunchHourForm(true);
+  };
+
+  const handleCancelOpenAttandanceLunchHourForm = () => {
+    setOpenAttandanceLunchHourForm(false);
+  };
+
   const handleOpenCalculatePopper = (newPlacement: PopperPlacementType) => (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorElCalculate(event.currentTarget);
     setOpenCalculatePopper(prev => placementCalculatePopper !== newPlacement || !prev);
@@ -326,7 +338,7 @@ const EmployeesPage: FC = () => {
           monthYear: payData.monthYear,
           name: payData.name,
           id: payData.id,
-          totalRegularHours: payData.totalRegularHours,
+          totalRegularDays: payData.totalRegularDays,
           totalExtraDays: payData.totalExtraDays,
           totalOtHours: payData.totalOtHours,
           totalHours: payData.totalHours,
@@ -420,7 +432,7 @@ const EmployeesPage: FC = () => {
           monthYear: payData.monthYear,
           name: payData.name,
           id: payData.id,
-          totalRegularHours: payData.totalRegularHours,
+          totalRegularDays: payData.totalRegularDays,
           totalExtraDays: payData.totalExtraDays,
           totalOtHours: payData.totalOtHours,
           totalHours: payData.totalHours,
@@ -546,6 +558,11 @@ const EmployeesPage: FC = () => {
                   <UploadDocIcon className={classes.icon} />
                 </IconButton>
               </Tooltip>
+              <Tooltip title='Add Lunch Hours' placement='top'>
+                <IconButton size='small' onClick={handleOpenAttendanceLunchHourForm}>
+                  <AddLunchHourIcon className={classes.icon} />
+                </IconButton>
+              </Tooltip>
               <CalculateAndExportPopper
                 popperType='calculate'
                 anchorEl={anchorElCalculate}
@@ -621,6 +638,14 @@ const EmployeesPage: FC = () => {
           handleSetMessageError={handleSetMessageError}
           attendancesToImportError={attendancesToImportError}
           setAttendancesToImportError={setAttendancesToImportError}
+        />
+        <AttendanceLunchHourModal
+          open={openAttandanceLunchHourForm}
+          handleCancel={handleCancelOpenAttandanceLunchHourForm}
+          setOpenSnackbar={setOpenSnackbar}
+          setSnackbarVarient={setSnackbarVarient}
+          handleSetMessageSuccess={handleSetMessageSuccess}
+          handleSetMessageError={handleSetMessageError}
         />
         <Modal
           aria-labelledby='spring-modal-title'

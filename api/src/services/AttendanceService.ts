@@ -147,3 +147,18 @@ export const isAttendanceExistByShiftDateAndEmployeeId = async (
 ): Promise<boolean> => {
   return (await AttendanceDao.countByShiftDateAndEmployeeId(shiftDate, attendanceType, shiftStartTime, EmployeeId)) > 0;
 };
+
+export const updateAttendanceLunchHour = async (shiftDate: Date, lunchHours: number, EmployeeId: string) => {
+  LOG.debug('Editing Attendance');
+
+  const attendance = await AttendanceDao.getByShiftDateAndEmployeeId(shiftDate, EmployeeId);
+  try {
+    if (attendance) {
+      await attendance.update({
+        lunchHours: lunchHours === null ? 0 : lunchHours
+      });
+    }
+  } catch (err) {
+    throw err;
+  }
+};

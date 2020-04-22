@@ -18,9 +18,10 @@ export const get = async (offset: number, limit: number, q?: string): Promise<Em
   const offsetAndLimit = generateOffsetAndLimit(offset, limit);
 
   const result: EmployeeDetailsResponseModel[] = await sequelize.query(
-    `SELECT e.*, p."totalRegularDays", p."totalExtraDays", p."totalOtHours", p."totalRegularPay", p."totalExtraDaysPay", p."totalOtPay", p."totalPay"
+    `SELECT e.*, a."lunchHours", p."totalRegularDays", p."totalExtraDays",  p."totalPhDays", p."totalOtHours", p."totalRegularPay", p."totalExtraDaysPay", p."totalPhDaysPay", p."totalOtPay", p."totalPay"
     FROM prismhr2."Employee" AS e
     LEFT JOIN prismhr2."Pay" AS p ON p."EmployeeId" = e.id
+    LEFt JOIN prismhr2."Attendance" AS a ON a."EmployeeId" = e.id
     ${where}
      ORDER BY 
      e."name" ASC

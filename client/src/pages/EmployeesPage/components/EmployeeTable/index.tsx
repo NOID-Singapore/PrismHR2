@@ -35,11 +35,13 @@ const EmployeeTable: FC<Props> = props => {
     otherDaysPayRate: 0,
     otPayRate: 0,
     workHourPerDay: 0,
-    totalRegularHours: 0,
+    totalRegularDays: 0,
     totalExtraDays: 0,
+    totalPhDays: 0,
     totalOtHours: 0,
     totalRegularPay: 0,
     totalExtraDaysPay: 0,
+    totalPhDaysPay: 0,
     totalOtPay: 0,
     totalPay: 0
   };
@@ -72,11 +74,13 @@ const EmployeeTable: FC<Props> = props => {
             headers={[
               { label: 'Name', pR: '10px', verticalAlign: 'top' },
               { label: 'Id', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total Reg. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Reg. Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Extra Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Ph Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total OT. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Reg. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Extra Days Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Ph Days Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total OT. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Action', pL: '10px', pR: '10px', verticalAlign: 'top' }

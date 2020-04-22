@@ -1,13 +1,13 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 import { makeStyles, Table, TableBody, TableHead } from '@material-ui/core';
-
 import HeaderRow from 'components/HeaderRow';
 import BodyRow from './components/BodyRow';
 import TablePagination from 'components/TablePagination';
 
 interface Props {
   isLoadingData: boolean;
-  attendanceHistories: AttendancesModel[];
+  employees: EmployeeDetailsModel[];
+  setEmployees: React.Dispatch<React.SetStateAction<EmployeeDetailsModel[]>>;
   count: number;
   currentPage: number;
   rowsPerPage: number;
@@ -21,24 +21,14 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const EmploymentHistoryTable: FC<Props> = props => {
+const EmployeeAttendanceTable: FC<Props> = props => {
   const classes = useStyles();
 
-  const { isLoadingData, attendanceHistories, count, currentPage, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = props;
-
-  const dummyAttendanceHistory: AttendancesModel = {
-    shiftDate: new Date(),
-    attendanceType: '',
-    shiftStartTime: new Date(),
-    shiftEndTime: new Date(),
-    totalOtHour: 0,
-    location: '',
-    createdAt: new Date(),
-    updatedAt: new Date()
-  };
+  const { isLoadingData, employees, setEmployees, count, currentPage, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = props;
 
   // The below logic introduces a 500ms delay for showing the skeleton
   const [showSkeleton, setShowSkeleton] = useState<boolean>(false);
+
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
@@ -55,30 +45,23 @@ const EmploymentHistoryTable: FC<Props> = props => {
     };
   }, [isLoadingData]);
 
-  // headerNameWithPaddings['headerName:pL:pR:pT:pB']
   return (
     <div className={classes.tableWrapper}>
       <Table>
         <TableHead>
           <HeaderRow
             headers={[
-              { label: 'Shift Date', pR: '10px', verticalAlign: 'top' },
-              { label: 'Shift Start Time', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Shift End Time', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total OT. Hour', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Location', pL: '10px', pR: '10px', verticalAlign: 'top' }
+              { label: 'ID', pR: '10px', verticalAlign: 'top' },
+              { label: 'Name', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Lunch Hour', pL: '10px', pR: '10px', verticalAlign: 'top' }
             ]}
           />
         </TableHead>
         <TableBody>
-          {showSkeleton
-            ? [1, 2, 3, 4, 5].map(index => <BodyRow key={index} attendanceHistory={dummyAttendanceHistory} isLoadingData={isLoadingData} />)
-            : attendanceHistories.map((attendanceHistory, index) => (
-                <BodyRow key={index} attendanceHistory={attendanceHistory} isLoadingData={isLoadingData} />
-              ))}
+          <BodyRow employee={employees} setEmployee={setEmployees} isLoadingData={isLoadingData} />
         </TableBody>
         <TablePagination
-          rowsPerPageOptions={[10, 30, 50]}
+          rowsPerPageOptions={[100, 200, 500]}
           count={count}
           rowsPerPage={rowsPerPage}
           page={currentPage}
@@ -89,5 +72,4 @@ const EmploymentHistoryTable: FC<Props> = props => {
     </div>
   );
 };
-
-export default EmploymentHistoryTable;
+export default EmployeeAttendanceTable;

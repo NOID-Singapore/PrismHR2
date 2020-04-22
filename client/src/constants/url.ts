@@ -17,6 +17,7 @@ export const EMPLOYEE_GLOBAL_SEARCH_URL = `${EMPLOYEE_BASE_URL}/globalsearch`;
 export const GET_EMPLOYEE_BY_ID_URL = (employeeId?: string) => `${EMPLOYEE_BASE_URL}/${employeeId}`;
 
 export const ATTENDANCE_BASE_URL = `${BASE_URL}/attendances`;
+export const GET_EDIT_ATTENDANCE_LUNCH_HOURS_URL = (employeeId: string) => `${ATTENDANCE_BASE_URL}/${employeeId}`;
 
 export const PAY_BASE_URL = `${BASE_URL}/pays`;
 

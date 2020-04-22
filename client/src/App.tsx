@@ -143,7 +143,7 @@ const App: React.FC = () => {
         align={!isLoggedIn ? 'center' : 'right'}
         className={clsx({ [classes.footerPaddingIsLoggedIn]: isLoggedIn })}
       >
-        {'© 2019 PrismHR All Rights Reserved'}
+        {'© 2020 PrismHR All Rights Reserved'}
       </Typography>
     </Box>
   );

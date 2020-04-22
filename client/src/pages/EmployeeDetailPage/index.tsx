@@ -58,7 +58,7 @@ const EmployeeDetailPage: FC = () => {
     otherDaysPayRate: 0,
     otPayRate: 0,
     workHourPerDay: 0,
-    totalRegularHours: 0,
+    totalRegularDays: 0,
     totalExtraDays: 0,
     totalOtHours: 0,
     totalRegularPay: 0,

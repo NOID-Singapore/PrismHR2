@@ -201,3 +201,10 @@ export const getEmployeeAttendanceBySelectedMonth = async (selectedMonth: string
 
   return result;
 };
+
+export const getByShiftDateAndEmployeeId = async (shiftDate: Date, EmployeeId: string) => {
+  const model = getAttendanceModel();
+
+  const shiftDateConvert = format(new Date(shiftDate), 'yyyy-MM-dd');
+  return model.findOne<Attendance>({ where: { shiftDate: shiftDateConvert, EmployeeId } });
+};
