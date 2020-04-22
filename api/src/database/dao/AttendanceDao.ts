@@ -143,7 +143,7 @@ export const getShiftDateInMonthUnique = async (EmployeeId: string, shiftDate: s
   const firstDate = format(new Date(period.getFullYear(), period.getMonth(), 1), 'yyyy-MM-dd');
   const lastDate = format(new Date(period.getFullYear(), period.getMonth() + 1, 0), 'yyyy-MM-dd');
   const result: AttendanceResponseModel[] = await sequelize.query(
-    `SELECT DISTINCT "shiftDate", "totalOtHour"
+    `SELECT DISTINCT "shiftDate", "totalOtHour", "lunchHours"
     FROM prismhr2."Attendance"
     WHERE "EmployeeId"= '${EmployeeId}' AND "shiftDate" BETWEEN '${firstDate}' AND '${lastDate}'`,
     {
