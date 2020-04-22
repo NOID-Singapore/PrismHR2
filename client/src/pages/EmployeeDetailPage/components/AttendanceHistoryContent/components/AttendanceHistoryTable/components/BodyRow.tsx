@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
 const BodyRow: FC<Props> = props => {
   const classes = useStyles();
   const { isLoadingData, attendanceHistory } = props;
-  const { shiftDate, shiftStartTime, shiftEndTime, totalOtHour, location } = attendanceHistory;
+  const { shiftDate, shiftStartTime, shiftEndTime, totalOtHour, lunchHours, location } = attendanceHistory;
 
   return (
     <Fragment>
@@ -32,6 +32,9 @@ const BodyRow: FC<Props> = props => {
         </BodyCell>
         <BodyCell cellWidth='17%' pL='10px' pR='10px' isComponent={true}>
           <Typography variant='body1'>{isLoadingData ? <Skeleton width={60} /> : shiftEndTime}</Typography>
+        </BodyCell>
+        <BodyCell cellWidth='15%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>{isLoadingData ? <Skeleton width={50} /> : lunchHours === null ? 0 : lunchHours}</Typography>
         </BodyCell>
         <BodyCell cellWidth='15%' pL='10px' pR='10px' isComponent={true}>
           <Typography variant='body1'>{isLoadingData ? <Skeleton width={50} /> : totalOtHour}</Typography>

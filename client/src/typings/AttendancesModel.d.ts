@@ -3,6 +3,7 @@ interface AttendancesModel {
   attendanceType: string;
   shiftStartTime: Date | string;
   shiftEndTime: Date | string;
+  lunchHours?: number;
   totalOtHour: number;
   location?: string;
   EmployeeId?: string;

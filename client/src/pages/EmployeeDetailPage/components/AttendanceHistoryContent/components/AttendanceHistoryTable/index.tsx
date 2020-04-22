@@ -31,6 +31,7 @@ const EmploymentHistoryTable: FC<Props> = props => {
     attendanceType: '',
     shiftStartTime: new Date(),
     shiftEndTime: new Date(),
+    lunchHours: 0,
     totalOtHour: 0,
     location: '',
     createdAt: new Date(),
@@ -65,6 +66,7 @@ const EmploymentHistoryTable: FC<Props> = props => {
               { label: 'Shift Date', pR: '10px', verticalAlign: 'top' },
               { label: 'Shift Start Time', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Shift End Time', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Lunch Hour', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total OT. Hour', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Location', pL: '10px', pR: '10px', verticalAlign: 'top' }
             ]}
