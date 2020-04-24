@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-WORKDIR=/home/ec2-user/workspace/PrismHR
+WORKDIR=/home/ec2-user/workspace/PrismHR2
 S3_BUCKET=prismhr2.dev.noid.com.sg
-CLOUDFRONT_ID=E2AZUYMFRNH1BV
+CLOUDFRONT_ID=E1CFVETP6TLWLM
 
 # Change CWD
 cd ${WORKDIR}
