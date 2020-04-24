@@ -12,7 +12,7 @@
     "watch-node": "nodemon -r dotenv/config build/server.js",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
-    "eslint": "eslint -c .eslintrc.json src/**",
+    "eslint": "eslint -c .eslintrc.json \"src/**\"",
     "start:prod": "NODE_ENV=production node -r dotenv/config build/server.js",
     "services:up": "docker-compose --project-directory=../deploy/docker --file=../deploy/docker/docker-compose.yml up -d",
     "services:down": "docker-compose --project-directory=../deploy/docker --file=../deploy/docker/docker-compose.yml down",
