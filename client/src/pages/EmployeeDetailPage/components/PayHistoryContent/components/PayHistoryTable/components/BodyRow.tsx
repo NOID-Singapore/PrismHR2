@@ -28,10 +28,14 @@ const BodyRow: FC<Props> = props => {
     totalTravel,
     totalLunchHours,
     totalOtHours,
+    totalExtraDaysOt,
+    totalPhDaysOt,
     totalRegularPay,
     totalExtraDaysPay,
     totalPhDaysPay,
     totalOtPay,
+    totalExtraDaysOtPay,
+    totalPhDaysOtPay,
     totalPay
   } = payHistory;
 
@@ -63,6 +67,12 @@ const BodyRow: FC<Props> = props => {
           <Typography variant='body1'>{isLoadingData ? <Skeleton width={50} /> : totalOtHours ? totalOtHours : '-'}</Typography>
         </BodyCell>
         <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>{isLoadingData ? <Skeleton width={50} /> : totalExtraDaysOt ? totalExtraDaysOt : '-'}</Typography>
+        </BodyCell>
+        <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>{isLoadingData ? <Skeleton width={50} /> : totalPhDaysOt ? totalPhDaysOt : '-'}</Typography>
+        </BodyCell>
+        <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
           <Typography variant='body1'>
             {isLoadingData ? (
               <Skeleton width={50} />
@@ -86,6 +96,17 @@ const BodyRow: FC<Props> = props => {
           <Typography variant='body1'>
             {isLoadingData ? (
               <Skeleton width={50} />
+            ) : totalPhDaysPay ? (
+              <NumberFormat value={totalPhDaysPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            ) : (
+              '$-'
+            )}
+          </Typography>
+        </BodyCell>
+        <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>
+            {isLoadingData ? (
+              <Skeleton width={50} />
             ) : totalOtPay ? (
               <NumberFormat value={totalOtPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
             ) : (
@@ -97,8 +118,19 @@ const BodyRow: FC<Props> = props => {
           <Typography variant='body1'>
             {isLoadingData ? (
               <Skeleton width={50} />
-            ) : totalPhDaysPay ? (
-              <NumberFormat value={totalPhDaysPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            ) : totalExtraDaysOtPay ? (
+              <NumberFormat value={totalExtraDaysOtPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            ) : (
+              '$-'
+            )}
+          </Typography>
+        </BodyCell>
+        <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>
+            {isLoadingData ? (
+              <Skeleton width={50} />
+            ) : totalPhDaysOtPay ? (
+              <NumberFormat value={totalPhDaysOtPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
             ) : (
               '$-'
             )}

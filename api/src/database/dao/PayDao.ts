@@ -163,7 +163,7 @@ export const getDataToExport = async (selectedMonth: string) => {
 
 export const getEmployeePayBySelectedMonth = async (selectedMonth: string): Promise<EmployeeDetailsPayResponseModel[]> => {
   const result: EmployeeDetailsPayResponseModel[] = await sequelize.query(
-    `SELECT e.id, e.name, e.position, e."basicSalary", p."monthYear", p."hourPayRate", p."otPayRate", p."totalRegularDays", p."totalExtraDays", p."totalPhDays", p."totalToolbox", p."totalTravel", p."totalLunchHours", p."totalOtHours", p."totalHours", p."totalRegularPay", p."totalExtraDaysPay", p."totalPhDaysPay", p."totalOtPay", p."totalPay"
+    `SELECT e.id, e.name, e.position, e."basicSalary", p."monthYear", p."hourPayRate", p."otPayRate", p."totalRegularDays", p."totalExtraDays", p."totalPhDays", p."totalToolbox", p."totalTravel", p."totalLunchHours", p."totalOtHours", p."totalExtraDaysOt", p."totalPhDaysOt", p."totalHours", p."totalRegularPay", p."totalExtraDaysPay", p."totalPhDaysPay", p."totalOtPay", p."totalExtraDaysOtPay", p."totalPhDaysOtPay", p."totalPay"
     FROM prismhr2."Employee" AS e
     LEFT JOIN prismhr2."Pay" AS p ON p."EmployeeId" = e.id
     AND to_date(p."monthYear",'MM/yyyy') = to_date('${escape(format(new Date(selectedMonth), 'MM/yyyy'))}','MM/yyyy')

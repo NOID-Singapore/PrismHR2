@@ -62,10 +62,14 @@ const BodyRow: FC<Props> = props => {
     totalExtraDays,
     totalPhDays,
     totalOtHours,
+    totalExtraDaysOt,
+    totalPhDaysOt,
     totalRegularPay,
     totalExtraDaysPay,
     totalPhDaysPay,
     totalOtPay,
+    totalExtraDaysOtPay,
+    totalPhDaysOtPay,
     totalPay,
     new: isNew
   } = employee;
@@ -123,6 +127,12 @@ const BodyRow: FC<Props> = props => {
           <Typography variant='body1'>{totalOtHours ? `${totalOtHours}` : '-'}</Typography>
         </BodyCell>
         <BodyCell cellWidth='10%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>{totalExtraDaysOt ? `${totalExtraDaysOt}` : '-'}</Typography>
+        </BodyCell>
+        <BodyCell cellWidth='10%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>{totalPhDaysOt ? `${totalPhDaysOt}` : '-'}</Typography>
+        </BodyCell>
+        <BodyCell cellWidth='10%' pL='10px' pR='10px' isComponent={true}>
           <Typography variant='body1'>
             {isLoadingData ? (
               <Skeleton width={150} />
@@ -161,6 +171,28 @@ const BodyRow: FC<Props> = props => {
               <Skeleton width={150} />
             ) : totalOtPay ? (
               <NumberFormat value={totalOtPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            ) : (
+              '$ -'
+            )}
+          </Typography>
+        </BodyCell>
+        <BodyCell cellWidth='10%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>
+            {isLoadingData ? (
+              <Skeleton width={150} />
+            ) : totalExtraDaysOtPay ? (
+              <NumberFormat value={totalExtraDaysOtPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            ) : (
+              '$ -'
+            )}
+          </Typography>
+        </BodyCell>
+        <BodyCell cellWidth='10%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>
+            {isLoadingData ? (
+              <Skeleton width={150} />
+            ) : totalPhDaysOtPay ? (
+              <NumberFormat value={totalPhDaysOtPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
             ) : (
               '$ -'
             )}

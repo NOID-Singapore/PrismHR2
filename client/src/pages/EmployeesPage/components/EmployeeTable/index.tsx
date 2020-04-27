@@ -39,10 +39,14 @@ const EmployeeTable: FC<Props> = props => {
     totalExtraDays: 0,
     totalPhDays: 0,
     totalOtHours: 0,
+    totalExtraDaysOt: 0,
+    totalPhDaysOt: 0,
     totalRegularPay: 0,
     totalExtraDaysPay: 0,
     totalPhDaysPay: 0,
     totalOtPay: 0,
+    totalExtraDaysOtPay: 0,
+    totalPhDaysOtPay: 0,
     totalPay: 0
   };
 
@@ -77,11 +81,15 @@ const EmployeeTable: FC<Props> = props => {
               { label: 'Total Reg. Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Sundays', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Ph Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total OT. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Reg. OT. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Sunday OT. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total PH. OT. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Reg. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Sundays Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Ph Days Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total OT. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Reg. OT. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Sunday OT. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total PH. OT. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Action', pL: '10px', pR: '10px', verticalAlign: 'top' }
             ]}
