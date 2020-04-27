@@ -15,11 +15,15 @@ export default class Pay extends ModelBase {
   public totalTravel?: number;
   public totalLunchHours?: number;
   public totalOtHours?: number;
+  public totalExtraDaysOt?: number;
+  public totalPhDaysOt?: number;
   public totalHours!: number;
   public totalRegularPay!: number;
   public totalExtraDaysPay?: number;
   public totalPhDaysPay?: number;
   public totalOtPay?: number;
+  public totalExtraDaysOtPay?: number;
+  public totalPhDaysOtPay?: number;
   public totalPay!: number;
 
   // timestamp
@@ -69,6 +73,14 @@ export default class Pay extends ModelBase {
           type: DataTypes.FLOAT,
           allowNull: true
         },
+        totalExtraDaysOt: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        totalPhDaysOt: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
         totalHours: {
           type: DataTypes.FLOAT,
           allowNull: false
@@ -86,6 +98,14 @@ export default class Pay extends ModelBase {
           allowNull: true
         },
         totalOtPay: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        totalExtraDaysOtPay: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        totalPhDaysOtPay: {
           type: DataTypes.FLOAT,
           allowNull: true
         },
