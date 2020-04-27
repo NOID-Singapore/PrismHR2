@@ -1,6 +1,7 @@
 import React, { FC, Fragment } from 'react';
 
 import { Avatar, makeStyles, TableRow, TextField, Theme, Typography } from '@material-ui/core';
+import NumberFormatCustom from 'components/NumberFormatCustom';
 import { green } from '@material-ui/core/colors';
 
 import Skeleton from 'react-loading-skeleton';
@@ -111,6 +112,12 @@ const BodyRow: FC<Props> = props => {
               onChange={event => handleLunchHourChange(event.target.value, index)}
               variant='outlined'
               autoComplete='off'
+              InputProps={{
+                classes: {
+                  input: classes.textFieldFont
+                },
+                inputComponent: NumberFormatCustom as any
+              }}
             />
           </BodyCell>
         </TableRow>

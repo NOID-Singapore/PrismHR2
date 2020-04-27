@@ -72,14 +72,14 @@ const PayHistoryTable: FC<Props> = props => {
             headers={[
               { label: 'Month', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Reg. Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total Extra Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Sundays', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total PH. Days', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Toolbox', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Travel', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Lunch Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total OT. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Reg. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total Extra Days Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Sundays Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total OT. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total PH. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Pay', pL: '10px', pR: '10px', verticalAlign: 'top' }

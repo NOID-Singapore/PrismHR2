@@ -151,16 +151,6 @@ const EmployeeDetailPage: FC = () => {
       <Grid container spacing={2}>
         <Grid item>
           <Typography variant='h6' color='primary' display='inline'>
-            Work Hour Per Day:
-          </Typography>
-          <Typography variant='h6' display='inline'>
-            {isLoadingData ? <Skeleton width={50} /> : <span className={classes.contentTypography}> {workHourPerDay}</span>}
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2}>
-        <Grid item>
-          <Typography variant='h6' color='primary' display='inline'>
             Basic Salary:
           </Typography>
           <Typography variant='h6' display='inline'>
@@ -168,20 +158,6 @@ const EmployeeDetailPage: FC = () => {
               <Skeleton width={50} />
             ) : (
               <NumberFormat value={basicSalary} displayType={'text'} thousandSeparator={true} prefix={' $'} className={classes.contentTypography} />
-            )}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography variant='h6' color='primary' display='inline'>
-            Hour Pay Rate:
-          </Typography>
-          <Typography variant='h6' display='inline'>
-            {isLoadingData ? (
-              <Skeleton width={50} />
-            ) : hourPayRate ? (
-              <NumberFormat value={hourPayRate} displayType={'text'} thousandSeparator={true} prefix={' $'} className={classes.contentTypography} />
-            ) : (
-              <span className={classes.contentTypography}> $0</span>
             )}
           </Typography>
         </Grid>
