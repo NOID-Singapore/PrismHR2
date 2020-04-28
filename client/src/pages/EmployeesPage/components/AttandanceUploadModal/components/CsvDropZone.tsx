@@ -84,7 +84,7 @@ const CsvDropZone: FC<Props> = props => {
               const shiftStartTime = `${Object.values(object)[5]}`.replace(/"/g, '');
               const shiftEndTime = `${Object.values(object)[6]}`.replace(/"/g, '');
               const totalOtHour = `${Object.values(object)[10]}`.replace(/"/g, '');
-              const location = `${Object.values(object)[15]}`.replace(/"/g, '');
+              const location = `${Object.values(object)[11]}`.replace(/"/g, '');
               const EmployeeId = `${Object.values(object)[0]}`.replace(/"/g, '');
 
               attandances.push({
@@ -92,6 +92,7 @@ const CsvDropZone: FC<Props> = props => {
                 attendanceType,
                 shiftStartTime,
                 shiftEndTime,
+                lunchHours: 0,
                 totalOtHour: Number(totalOtHour),
                 location,
                 EmployeeId

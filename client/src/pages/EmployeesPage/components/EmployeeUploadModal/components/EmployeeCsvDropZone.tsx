@@ -58,8 +58,8 @@ const EmployeeCsvDropZone: FC<Props> = props => {
             const basicSalary = Object.values(object)[5] ? Number(Object.values(object)[5]) : 0;
             const hourPayRate = Object.values(object)[6] ? Number(Object.values(object)[6]) : undefined;
             const otherDaysPayRate = Object.values(object)[7] ? Number(Object.values(object)[7]) : undefined;
-            const otPayRate = Object.values(object)[7] ? Number(Object.values(object)[9]) : undefined;
-            const workHourPerDay = Object.values(object)[8] ? Number(Object.values(object)[9]) : 0;
+            const otPayRate = Object.values(object)[8] ? Number(Object.values(object)[8]) : undefined;
+            const workHourPerDay = Object.values(object)[9] ? Number(Object.values(object)[9]) : 0;
             return employees.push({
               id,
               name,
