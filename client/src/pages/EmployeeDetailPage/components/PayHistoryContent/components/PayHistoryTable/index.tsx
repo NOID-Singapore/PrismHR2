@@ -84,10 +84,9 @@ const PayHistoryTable: FC<Props> = props => {
               { label: 'Total OT. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Sunday OT. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total PH. OT. Hours', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total Reg. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Sundays Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total PH. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
-              { label: 'Total OT. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
+              { label: 'Total Reg. OT. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Sunday OT. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total PH. OT. Pay', pL: '10px', pR: '10px', verticalAlign: 'top' },
               { label: 'Total Pay', pL: '10px', pR: '10px', verticalAlign: 'top' }

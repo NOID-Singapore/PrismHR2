@@ -180,7 +180,7 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
         });
       }
 
-      additonalPay = totalRegularPay + totalExtraDaysPay + totalPhDaysPay + totalOtPay + totalExtraDaysOtPay + totalPhDaysOtPay;
+      additonalPay = totalExtraDaysPay + totalPhDaysPay + totalOtPay + totalExtraDaysOtPay + totalPhDaysOtPay;
 
       //total pay
       const totalPay = basicSalary + additonalPay;

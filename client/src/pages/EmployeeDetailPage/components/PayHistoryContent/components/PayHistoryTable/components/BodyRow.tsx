@@ -30,7 +30,6 @@ const BodyRow: FC<Props> = props => {
     totalOtHours,
     totalExtraDaysOt,
     totalPhDaysOt,
-    totalRegularPay,
     totalExtraDaysPay,
     totalPhDaysPay,
     totalOtPay,
@@ -71,15 +70,6 @@ const BodyRow: FC<Props> = props => {
         </BodyCell>
         <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
           <Typography variant='body1'>{isLoadingData ? <Skeleton width={50} /> : totalPhDaysOt ? totalPhDaysOt : '-'}</Typography>
-        </BodyCell>
-        <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
-          <Typography variant='body1'>
-            {isLoadingData ? (
-              <Skeleton width={50} />
-            ) : (
-              <NumberFormat value={totalRegularPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-            )}
-          </Typography>
         </BodyCell>
         <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
           <Typography variant='body1'>
