@@ -121,11 +121,15 @@ export const createPay = async (
   totalTravel: number | string,
   totalLunchHours: number | string,
   totalOtHours: number,
+  totalExtraDaysOt: number,
+  totalPhDaysOt: number,
   totalHours: number,
   totalRegularPay: number,
   totalExtraDaysPay: number | string,
   totalPhDaysPay: number | string,
   totalOtPay: number | string,
+  totalExtraDaysOtPay: number | string,
+  totalPhDaysOtPay: number | string,
   totalPay: number | string,
   EmployeeId: string
 ) => {
@@ -142,11 +146,15 @@ export const createPay = async (
     totalTravel,
     totalLunchHours,
     totalOtHours,
+    totalExtraDaysOt,
+    totalPhDaysOt,
     totalHours,
     totalRegularPay,
     totalExtraDaysPay,
     totalPhDaysPay,
     totalOtPay,
+    totalExtraDaysOtPay,
+    totalPhDaysOtPay,
     totalPay,
     EmployeeId
   });

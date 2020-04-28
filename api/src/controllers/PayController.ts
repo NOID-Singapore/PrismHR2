@@ -82,6 +82,12 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
       //totalOtHours
       let totalOtHours = 0;
 
+      //totalExtraDaysOt
+      let totalExtraDaysOt = 0;
+
+      //totalPhDaysOt
+      let totalPhDaysOt = 0;
+
       //totalRegularPay
       let totalRegularPay = 0;
 
@@ -90,6 +96,15 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
 
       //totalPhDaysPay
       let totalPhDaysPay = 0;
+
+      //totalRegOt
+      let totalOtPay = 0;
+
+      //totalExtraDaysOtPay
+      let totalExtraDaysOtPay = 0;
+
+      //totalPhDaysOtPay
+      let totalPhDaysOtPay = 0;
 
       //d additonal pay
       let additonalPay = 0;
@@ -107,14 +122,14 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
             const getDay = convertToDate.getDay();
             if (getDay === 0) {
               totalExtraDays++;
-              totalOtHours = totalOtHours + attendance.totalOtHour;
-              additonalPay = additonalPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
-              totalExtraDaysPay = totalExtraDaysPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
+              totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
+              totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
+              totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
             } else if (attendance.shiftDate === holiday) {
               totalPhDays++;
-              totalOtHours = totalOtHours + attendance.totalOtHour;
-              additonalPay = additonalPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
-              totalPhDaysPay = totalPhDaysPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
+              totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour;
+              totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
+              totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
             } else {
               totalRegularDays++;
               if (attendance.totalOtHour > 1.3) {
@@ -124,12 +139,12 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
                 totalLunchHours = totalLunchHours + lunchHours;
                 const otHours = attendance.totalOtHour - 1 - 0.3 - lunchHours;
                 totalOtHours = totalOtHours + otHours;
-                additonalPay = additonalPay + otHours * otPayRate;
+                totalOtPay = totalOtPay + otHours * otPayRate;
                 totalRegularPay = totalRegularPay + otHours * otPayRate;
               } else {
                 totalToolbox = totalToolbox + attendance.totalOtHour;
                 totalOtHours = totalOtHours + attendance.totalOtHour;
-                additonalPay = additonalPay + attendance.totalOtHour * otPayRate;
+                totalOtPay = totalOtPay + attendance.totalOtHour * otPayRate;
                 totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
               }
             }
@@ -141,9 +156,9 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
           const getDay = convertToDate.getDay();
           if (getDay === 0) {
             totalExtraDays++;
-            totalOtHours = totalOtHours + attendance.totalOtHour;
-            additonalPay = additonalPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
-            totalExtraDaysPay = totalExtraDaysPay + (otherDaysPayRate + attendance.totalOtHour * otPayRate);
+            totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
+            totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
+            totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
           } else {
             totalRegularDays++;
             if (attendance.totalOtHour > 1.3) {
@@ -153,17 +168,19 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
               totalLunchHours = totalLunchHours + lunchHours;
               const otHours = attendance.totalOtHour - 1 - 0.3 - lunchHours;
               totalOtHours = totalOtHours + otHours;
-              additonalPay = additonalPay + otHours * otPayRate;
+              totalOtPay = totalOtPay + otHours * otPayRate;
               totalRegularPay = totalRegularPay + otHours * otPayRate;
             } else {
               totalToolbox = totalToolbox + attendance.totalOtHour;
               totalOtHours = totalOtHours + attendance.totalOtHour;
-              additonalPay = additonalPay + attendance.totalOtHour * otPayRate;
+              totalOtPay = totalOtPay + attendance.totalOtHour * otPayRate;
               totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
             }
           }
         });
       }
+
+      additonalPay = totalRegularPay + totalExtraDaysPay + totalPhDaysPay + totalOtPay + totalExtraDaysOtPay + totalPhDaysOtPay;
 
       //total pay
       const totalPay = basicSalary + additonalPay;
@@ -183,11 +200,15 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
           totalTravel,
           totalLunchHours,
           totalOtHours,
+          totalExtraDaysOt,
+          totalPhDaysOt,
           totalOtHours,
           totalRegularPay,
           totalExtraDaysPay,
           totalPhDaysPay,
-          additonalPay,
+          totalOtPay,
+          totalExtraDaysOtPay,
+          totalPhDaysOtPay,
           totalPay,
           employee.getDataValue('id')
         );
@@ -203,11 +224,15 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
           totalTravel,
           totalLunchHours,
           totalOtHours,
+          totalExtraDaysOt,
+          totalPhDaysOt,
           totalOtHours,
           totalRegularPay,
           totalExtraDaysPay,
           totalPhDaysPay,
-          additonalPay,
+          totalOtPay,
+          totalExtraDaysOtPay,
+          totalPhDaysOtPay,
           totalPay,
           employee.getDataValue('id')
         );
