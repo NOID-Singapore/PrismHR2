@@ -301,7 +301,15 @@ const EmployeesPage: FC = () => {
 
       let deskeraCsvData: ExportDeskeraEmployeePay[] = [];
       for (const data of result.data.employeePay) {
-        deskeraCsvData.push({ userName: data.name, attnIncentive: 50, basicPay: data.totalRegularPay, bonus: data.totalOtPay });
+        deskeraCsvData.push({
+          userName: data.name,
+          basicPay: data.totalRegularPay,
+          totalExtraDaysPay: data.totalExtraDaysPay,
+          totalPhDaysPay: data.totalPhDaysPay,
+          totalOtPay: data.totalOtPay,
+          totalExtraDaysOt: data.totalExtraDaysOtPay,
+          totalPhDaysOt: data.totalPhDaysOtPay
+        });
       }
 
       setDeskeraHeaders(deskeraCsvHeaders);
@@ -320,16 +328,19 @@ const EmployeesPage: FC = () => {
         });
       }
       defaultCsvHeaders.push(
-        { label: 'Total Regular Hours', key: 'totalRegularHours' },
+        { label: 'Total Regular Days', key: 'totalRegularDays' },
         { label: 'Total Extra Days', key: 'totalExtraDays' },
+        { label: 'Total PH. Days', key: 'totalPhDays' },
         { label: 'Total OT hours', key: 'totalOtHours' },
-        { label: 'Total hours', key: 'totalHours' },
+        { label: 'Total Sunday OT hours', key: 'totalExtraDaysOt' },
+        { label: 'Total PH. OT hours', key: 'totalPhDaysOt' },
         { label: 'Total Regular Pay', key: 'totalRegularPay' },
         { label: 'Total Extra Day Pay', key: 'totalExtraDaysPay' },
+        { label: 'Total PH. Day Pay', key: 'totalPhDaysPay' },
         { label: 'Total OT Pay', key: 'totalOtPay' },
-        { label: 'Total Pay', key: 'totalPay' },
-        { label: 'Employee Regular Hourly Rate', key: 'hourPayRate' },
-        { label: 'Employee OT Hourly Rate ', key: 'otPayRate' }
+        { label: 'Total Sunday OT Pay', key: 'totalExtraDaysOtPay' },
+        { label: 'Total PH. OT Pay', key: 'totalPhDaysOtPay' },
+        { label: 'Total Pay', key: 'totalPay' }
       );
       let defaultCsvData: any[] = [];
       let attendanceDataByDate: any[] = [];
@@ -340,14 +351,17 @@ const EmployeesPage: FC = () => {
           id: payData.id,
           totalRegularDays: payData.totalRegularDays,
           totalExtraDays: payData.totalExtraDays,
+          totalPhDays: payData.totalPhDays,
           totalOtHours: payData.totalOtHours,
-          totalHours: payData.totalHours,
+          totalExtraDaysOt: payData.totalExtraDaysOt,
+          totalPhDaysOt: payData.totalPhDaysOt,
           totalRegularPay: payData.totalRegularPay,
           totalExtraDaysPay: payData.totalExtraDaysPay,
+          totalPhDaysPay: payData.totalPhDaysPay,
           totalOtPay: payData.totalOtPay,
-          totalPay: payData.totalPay,
-          hourPayRate: payData.hourPayRate,
-          otPayRate: payData.otPayRate
+          totalExtraDaysOtPay: payData.totalExtraDaysOtPay,
+          totalPhDaysOtPay: payData.totalPhDaysOtPay,
+          totalPay: payData.totalPay
         });
         for (let i = 1; i <= numberOfDaysInMonth; i++) {
           const shiftDate = selectedMonth && format(new Date(`${format(selectedMonth, 'yyyy-MM')}-${i}`), 'yyyy-MM-dd');
@@ -395,7 +409,15 @@ const EmployeesPage: FC = () => {
 
       let deskeraCsvData: ExportDeskeraEmployeePay[] = [];
       for (const data of result.data.employeePay) {
-        deskeraCsvData.push({ userName: data.name, attnIncentive: 50, basicPay: data.totalRegularPay, bonus: data.totalOtPay });
+        deskeraCsvData.push({
+          userName: data.name,
+          basicPay: data.totalRegularPay,
+          totalExtraDaysPay: data.totalExtraDaysPay,
+          totalPhDaysPay: data.totalPhDaysPay,
+          totalOtPay: data.totalOtPay,
+          totalExtraDaysOt: data.totalExtraDaysOtPay,
+          totalPhDaysOt: data.totalPhDaysOtPay
+        });
       }
 
       setDeskeraHeaders(deskeraCsvHeaders);
@@ -414,16 +436,19 @@ const EmployeesPage: FC = () => {
         });
       }
       defaultCsvHeaders.push(
-        { label: 'Total Regular Hours', key: 'totalRegularHours' },
+        { label: 'Total Regular Days', key: 'totalRegularDays' },
         { label: 'Total Extra Days', key: 'totalExtraDays' },
+        { label: 'Total PH. Days', key: 'totalPhDays' },
         { label: 'Total OT hours', key: 'totalOtHours' },
-        { label: 'Total hours', key: 'totalHours' },
+        { label: 'Total Sunday OT hours', key: 'totalExtraDaysOt' },
+        { label: 'Total PH. OT hours', key: 'totalPhDaysOt' },
         { label: 'Total Regular Pay', key: 'totalRegularPay' },
         { label: 'Total Extra Day Pay', key: 'totalExtraDaysPay' },
+        { label: 'Total PH. Day Pay', key: 'totalPhDaysPay' },
         { label: 'Total OT Pay', key: 'totalOtPay' },
-        { label: 'Total Pay', key: 'totalPay' },
-        { label: 'Employee Regular Hourly Rate', key: 'hourPayRate' },
-        { label: 'Employee OT Hourly Rate ', key: 'otPayRate' }
+        { label: 'Total Sunday OT Pay', key: 'totalExtraDaysOtPay' },
+        { label: 'Total PH. OT Pay', key: 'totalPhDaysOtPay' },
+        { label: 'Total Pay', key: 'totalPay' }
       );
       let defaultCsvData: any[] = [];
       let attendanceDataByDate: any[] = [];
@@ -434,14 +459,17 @@ const EmployeesPage: FC = () => {
           id: payData.id,
           totalRegularDays: payData.totalRegularDays,
           totalExtraDays: payData.totalExtraDays,
+          totalPhDays: payData.totalPhDays,
           totalOtHours: payData.totalOtHours,
-          totalHours: payData.totalHours,
+          totalExtraDaysOt: payData.totalExtraDaysOt,
+          totalPhDaysOt: payData.totalPhDaysOt,
           totalRegularPay: payData.totalRegularPay,
           totalExtraDaysPay: payData.totalExtraDaysPay,
+          totalPhDaysPay: payData.totalPhDaysPay,
           totalOtPay: payData.totalOtPay,
-          totalPay: payData.totalPay,
-          hourPayRate: payData.hourPayRate,
-          otPayRate: payData.otPayRate
+          totalExtraDaysOtPay: payData.totalExtraDaysOtPay,
+          totalPhDaysOtPay: payData.totalPhDaysOtPay,
+          totalPay: payData.totalPay
         });
         for (let i = 1; i <= numberOfDaysInMonth; i++) {
           const shiftDate = selectedMonth && format(new Date(`${format(selectedMonth, 'yyyy-MM')}-${i}`), 'yyyy-MM-dd');
@@ -450,7 +478,7 @@ const EmployeesPage: FC = () => {
           );
           if (indexOfAttendance !== -1) {
             let resDataLocation = result.data.employeeAttendance[indexOfAttendance].location.split(',');
-            let resDataTotalHour = result.data.employeeAttendance[indexOfAttendance].totalHour.split(',');
+            let resDataTotalHour = result.data.employeeAttendance[indexOfAttendance].totalOtHour.split(',');
             let resLength = result.data.employeeAttendance[indexOfAttendance].location.split(',').length;
             attendanceDataByDate[i] = [];
             for (let j = 0; j < resLength; j++) {

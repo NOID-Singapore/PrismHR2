@@ -88,7 +88,7 @@ const EmployeeDetailPage: FC = () => {
     };
   }, [params]);
 
-  const { name, position, basicSalary, hourPayRate, otherDaysPayRate, otPayRate, workHourPerDay } = employee!;
+  const { name, position, basicSalary, otherDaysPayRate, otPayRate } = employee!;
 
   let initialName: any = [];
   if (name) {

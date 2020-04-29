@@ -1,6 +1,9 @@
 interface ExportDeskeraEmployeePay {
   userName: string;
-  attnIncentive: number;
   basicPay: number;
-  bonus: number;
+  totalExtraDaysPay: number;
+  totalPhDaysPay: number;
+  totalOtPay: number;
+  totalExtraDaysOt: number;
+  totalPhDaysOt: number;
 }
