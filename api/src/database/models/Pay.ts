@@ -21,6 +21,9 @@ export default class Pay extends ModelBase {
   public totalRegularPay!: number;
   public totalExtraDaysPay?: number;
   public totalPhDaysPay?: number;
+  public totalToolboxPay?: number;
+  public totalTravelPay?: number;
+  public totalLunchPay?: number;
   public totalOtPay?: number;
   public totalExtraDaysOtPay?: number;
   public totalPhDaysOtPay?: number;
@@ -94,6 +97,18 @@ export default class Pay extends ModelBase {
           allowNull: true
         },
         totalPhDaysPay: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        totalToolboxPay: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        totalTravelPay: {
+          type: DataTypes.FLOAT,
+          allowNull: true
+        },
+        totalLunchPay: {
           type: DataTypes.FLOAT,
           allowNull: true
         },

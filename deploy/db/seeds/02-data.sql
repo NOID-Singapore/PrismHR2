@@ -74,7 +74,7 @@ INSERT INTO prismhr2."Attendance" VALUES ('2019-11-30', 'DESKERA', '08:00:00', '
 -- Data for Name: Pay; Type: TABLE DATA; Schema: prismhr2; Owner: prismhr2
 --
 
-INSERT INTO prismhr2."Pay" VALUES ('11/2019', 10, 5, 26, null, null, null, null, null, 350, null, null, 558, 1500, null, null, 1750, null, null, 3250, '123456', '2019-12-06 16:00:35+08', '2019-12-06 16:00:37+08');
+INSERT INTO prismhr2."Pay" VALUES ('11/2019', 10, 5, 26, null, null, null, null, null, 350, null, null, 558, 1500, null, null, null, null, null, 1750, null, null, 3250, '123456', '2019-12-06 16:00:35+08', '2019-12-06 16:00:37+08');
 
 
 --

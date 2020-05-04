@@ -143,8 +143,9 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
                 totalRegularPay = totalRegularPay + otHours * otPayRate;
               } else {
                 totalToolbox = totalToolbox + attendance.totalOtHour;
-                totalOtHours = totalOtHours + attendance.totalOtHour;
-                totalOtPay = totalOtPay + attendance.totalOtHour * otPayRate;
+                const otHours = attendance.totalOtHour - 1;
+                totalOtHours = totalOtHours + otHours;
+                totalOtPay = totalOtPay + otHours * otPayRate;
                 totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
               }
             }
@@ -172,15 +173,19 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
               totalRegularPay = totalRegularPay + otHours * otPayRate;
             } else {
               totalToolbox = totalToolbox + attendance.totalOtHour;
-              totalOtHours = totalOtHours + attendance.totalOtHour;
-              totalOtPay = totalOtPay + attendance.totalOtHour * otPayRate;
+              const otHours = attendance.totalOtHour - 1;
+              totalOtHours = totalOtHours + otHours;
+              totalOtPay = totalOtPay + otHours * otPayRate;
               totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
             }
           }
         });
       }
 
-      additonalPay = totalExtraDaysPay + totalPhDaysPay + totalOtPay + totalExtraDaysOtPay + totalPhDaysOtPay;
+      const toolboxPay = totalToolbox * otPayRate;
+      const travelPay = totalTravel * otPayRate;
+      const lunchPay = totalLunchHours * otPayRate;
+      additonalPay = totalExtraDaysPay + totalPhDaysPay + toolboxPay + travelPay + lunchPay + totalOtPay + totalExtraDaysOtPay + totalPhDaysOtPay;
 
       //total pay
       const totalPay = basicSalary + additonalPay;
@@ -206,6 +211,9 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
           employee.getDataValue('basicSalary') === null ? 0 : employee.getDataValue('basicSalary'),
           totalExtraDaysPay,
           totalPhDaysPay,
+          toolboxPay,
+          travelPay,
+          lunchPay,
           totalOtPay,
           totalExtraDaysOtPay,
           totalPhDaysOtPay,
@@ -230,6 +238,9 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
           employee.getDataValue('basicSalary') === null ? 0 : employee.getDataValue('basicSalary'),
           totalExtraDaysPay,
           totalPhDaysPay,
+          toolboxPay,
+          travelPay,
+          lunchPay,
           totalOtPay,
           totalExtraDaysOtPay,
           totalPhDaysOtPay,
