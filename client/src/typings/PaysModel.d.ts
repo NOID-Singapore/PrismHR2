@@ -15,6 +15,9 @@ interface PaysModel {
   totalRegularPay: number;
   totalExtraDaysPay: number;
   totalPhDaysPay: number;
+  totalToolboxPay: number;
+  totalTravelPay: number;
+  totalLunchPay: number;
   totalOtPay: number;
   totalExtraDaysOtPay: number;
   totalPhDaysOtPay: number;

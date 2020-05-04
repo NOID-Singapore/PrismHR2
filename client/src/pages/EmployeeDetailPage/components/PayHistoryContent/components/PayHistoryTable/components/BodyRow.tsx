@@ -32,6 +32,9 @@ const BodyRow: FC<Props> = props => {
     totalPhDaysOt,
     totalExtraDaysPay,
     totalPhDaysPay,
+    totalToolboxPay,
+    totalTravelPay,
+    totalLunchPay,
     totalOtPay,
     totalExtraDaysOtPay,
     totalPhDaysOtPay,
@@ -88,6 +91,39 @@ const BodyRow: FC<Props> = props => {
               <Skeleton width={50} />
             ) : totalPhDaysPay ? (
               <NumberFormat value={totalPhDaysPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            ) : (
+              '$-'
+            )}
+          </Typography>
+        </BodyCell>
+        <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>
+            {isLoadingData ? (
+              <Skeleton width={50} />
+            ) : totalToolboxPay ? (
+              <NumberFormat value={totalToolboxPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            ) : (
+              '$-'
+            )}
+          </Typography>
+        </BodyCell>
+        <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>
+            {isLoadingData ? (
+              <Skeleton width={50} />
+            ) : totalTravelPay ? (
+              <NumberFormat value={totalTravelPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+            ) : (
+              '$-'
+            )}
+          </Typography>
+        </BodyCell>
+        <BodyCell cellWidth='9.1%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>
+            {isLoadingData ? (
+              <Skeleton width={50} />
+            ) : totalLunchPay ? (
+              <NumberFormat value={totalLunchPay} displayType={'text'} thousandSeparator={true} prefix={'$'} />
             ) : (
               '$-'
             )}

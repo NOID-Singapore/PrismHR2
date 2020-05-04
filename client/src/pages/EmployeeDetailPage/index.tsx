@@ -63,6 +63,9 @@ const EmployeeDetailPage: FC = () => {
     totalOtHours: 0,
     totalRegularPay: 0,
     totalExtraDaysPay: 0,
+    totalToolboxPay: 0,
+    totalTravelPay: 0,
+    totalLunchPay: 0,
     totalOtPay: 0,
     totalPay: 0
   };
@@ -188,8 +191,14 @@ const EmployeeDetailPage: FC = () => {
           <Typography variant='h6' display='inline'>
             {isLoadingData ? (
               <Skeleton width={50} />
-            ) : otPayRate ? (
-              <NumberFormat value={otPayRate} displayType={'text'} thousandSeparator={true} prefix={' $'} className={classes.contentTypography} />
+            ) : basicSalary ? (
+              <NumberFormat
+                value={(((basicSalary * 12) / (52 * 44)) * 1.5).toFixed(2)}
+                displayType={'text'}
+                thousandSeparator={true}
+                prefix={' $'}
+                className={classes.contentTypography}
+              />
             ) : (
               <span className={classes.contentTypography}> $0</span>
             )}
