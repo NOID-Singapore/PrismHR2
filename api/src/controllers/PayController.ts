@@ -134,10 +134,10 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
               totalRegularDays++;
               if (attendance.totalOtHour > 1.3) {
                 totalToolbox = totalToolbox + 1;
-                totalTravel = totalTravel + 0.3;
+                totalTravel = totalTravel + 0.5;
                 const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
                 totalLunchHours = totalLunchHours + lunchHours;
-                const otHours = attendance.totalOtHour - 1 - 0.3 - lunchHours;
+                const otHours = attendance.totalOtHour - 1 - 0.5;
                 totalOtHours = totalOtHours + otHours;
                 totalOtPay = totalOtPay + otHours * otPayRate;
                 totalRegularPay = totalRegularPay + otHours * otPayRate;
@@ -164,10 +164,10 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
             totalRegularDays++;
             if (attendance.totalOtHour > 1.3) {
               totalToolbox = totalToolbox + 1;
-              totalTravel = totalTravel + 0.3;
+              totalTravel = totalTravel + 0.5;
               const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
               totalLunchHours = totalLunchHours + lunchHours;
-              const otHours = attendance.totalOtHour - 1 - 0.3 - lunchHours;
+              const otHours = attendance.totalOtHour - 1 - 0.5;
               totalOtHours = totalOtHours + otHours;
               totalOtPay = totalOtPay + otHours * otPayRate;
               totalRegularPay = totalRegularPay + otHours * otPayRate;
