@@ -1,6 +1,7 @@
 import express, { RequestHandler } from 'express';
 import { OK } from 'http-status-codes';
 import { Authentication } from '../config/passport';
+import { format } from 'date-fns';
 
 import Logger from '../Logger';
 import * as PayService from '../services/PayService';
@@ -46,7 +47,9 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
     const { holidays } = await HolidayService.getAllHoliday();
     const holidayArray: any = [];
     holidays.map(holiday => {
-      holidayArray.push(holiday.getDataValue('holidayDate'));
+      if (format(new Date(selectedMonth), 'yyyy-MM') === format(new Date(holiday.getDataValue('holidayDate')), 'yyyy-MM')) {
+        holidayArray.push(holiday.getDataValue('holidayDate'));
+      }
     });
 
     const promises = employees.map(async employee => {
@@ -116,40 +119,44 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
       const { AttendanceShiftDate } = await AttendanceService.getAttendaceByIdAndShiftDateUnique(employee.getDataValue('id'), selectedMonth);
 
       if (holidayArray.length > 0) {
-        holidayArray.map((holiday: any) => {
-          AttendanceShiftDate.map(attendance => {
-            const convertToDate = new Date(attendance.shiftDate);
-            const getDay = convertToDate.getDay();
-            if (getDay === 0) {
-              totalExtraDays++;
-              totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
-              totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
-              totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
-            } else if (attendance.shiftDate === holiday) {
-              totalPhDays++;
-              totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour;
-              totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
-              totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
-            } else {
-              totalRegularDays++;
-              if (attendance.totalOtHour > 1.3) {
-                totalToolbox = totalToolbox + 1;
-                totalTravel = totalTravel + 0.5;
-                const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
-                totalLunchHours = totalLunchHours + lunchHours;
-                const otHours = attendance.totalOtHour - 1 - 0.5;
-                totalOtHours = totalOtHours + otHours;
-                totalOtPay = totalOtPay + otHours * otPayRate;
-                totalRegularPay = totalRegularPay + otHours * otPayRate;
-              } else {
-                totalToolbox = totalToolbox + attendance.totalOtHour;
-                const otHours = attendance.totalOtHour - 1;
-                totalOtHours = totalOtHours + otHours;
-                totalOtPay = totalOtPay + otHours * otPayRate;
-                totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
-              }
+        AttendanceShiftDate.map(attendance => {
+          const convertToDate = new Date(attendance.shiftDate);
+          const getDay = convertToDate.getDay();
+          let phDate;
+          holidayArray.map((holiday: any) => {
+            if (attendance.shiftDate === holiday) {
+              phDate = holiday;
             }
           });
+          if (getDay === 0) {
+            totalExtraDays++;
+            totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
+            totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
+            totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
+          } else if (attendance.shiftDate === phDate) {
+            totalPhDays++;
+            totalPhDaysOt = totalPhDaysOt + attendance.totalOtHour;
+            totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
+            totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
+          } else {
+            totalRegularDays++;
+            if (attendance.totalOtHour > 1.3) {
+              totalToolbox = totalToolbox + 1;
+              totalTravel = totalTravel + 0.5;
+              const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
+              totalLunchHours = totalLunchHours + lunchHours;
+              const otHours = attendance.totalOtHour - 1 - 0.5;
+              totalOtHours = totalOtHours + otHours;
+              totalOtPay = totalOtPay + otHours * otPayRate;
+              totalRegularPay = totalRegularPay + otHours * otPayRate;
+            } else {
+              totalToolbox = totalToolbox + attendance.totalOtHour;
+              const otHours = attendance.totalOtHour - 1;
+              totalOtHours = totalOtHours + otHours;
+              totalOtPay = totalOtPay + otHours * otPayRate;
+              totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
+            }
+          }
         });
       } else {
         AttendanceShiftDate.map(attendance => {
