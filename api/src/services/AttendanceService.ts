@@ -54,6 +54,14 @@ export const getTotalWorkDaysInMonth = async (employeeId: string, shiftDate: str
 
   return { workDays: count };
 };
+
+export const getEmployeeAttendanceBySelectedDate = async (shiftDate: string) => {
+  LOG.debug('Getting Attendance By shiftDate');
+
+  const rows = await AttendanceDao.getEmployeeAttendanceBySelectedDate(shiftDate);
+
+  return { AttendanceShiftDate: rows };
+};
 /**
  * Create new attendances in the system, based on uploaded csv file from user
  *

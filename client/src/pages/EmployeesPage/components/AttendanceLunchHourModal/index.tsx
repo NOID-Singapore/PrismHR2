@@ -22,7 +22,7 @@ import { orange } from '@material-ui/core/colors';
 import EmployeeAttendanceTable from './components/EmployeeAttendanceTable';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { EMPLOYEE_BASE_URL, GET_EDIT_ATTENDANCE_LUNCH_HOURS_URL } from 'constants/url';
+import { GET_EDIT_ATTENDANCE_LUNCH_HOURS_URL, GET_ATTENDANCE_BY_SHIFT_DATE } from 'constants/url';
 
 interface Props {
   open: boolean;
@@ -112,12 +112,11 @@ const AttendanceLunchHourModal: FC<Props> = props => {
   const { open, handleCancel, setOpenSnackbar, setSnackbarVarient, handleSetMessageSuccess, handleSetMessageError } = props;
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const [queryString, setQueryString] = useState<string>();
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(100);
   const [isSearchingEmployee, setSearchingEmployee] = useState<boolean>(false);
   const [isSearchEmployeeError, setSearchEmployeeError] = useState<boolean>(false);
-  const [employees, setEmployees] = useState<EmployeeDetailsModel[]>([]);
+  const [attendances, setAttendances] = useState<EmployeeAttendancesModel[]>([]);
   const [count, setCount] = useState<number>(0);
 
   const [lunchHourDate, setLunchHourDate] = useState<Date | null>(new Date());
@@ -126,27 +125,14 @@ const AttendanceLunchHourModal: FC<Props> = props => {
   const fetchData = useCallback(() => {
     const cancelTokenSource: CancelTokenSource = axios.CancelToken.source();
 
-    const getQueryParams = () => {
-      const params = new URLSearchParams();
-      if (queryString) {
-        params.append('q', queryString);
-      }
-
-      params.append('s', (currentPage * rowsPerPage).toString());
-      params.append('l', rowsPerPage.toString());
-
-      return params.toString();
-    };
-
     const searchEmployee = async () => {
       setSearchingEmployee(true);
       setSearchEmployeeError(false);
 
       try {
-        const url = `${EMPLOYEE_BASE_URL}?${getQueryParams()}`;
-        const { data } = await axios.get(url, { cancelToken: cancelTokenSource.token });
-        setCount(data.count);
-        setEmployees(data.employees);
+        const { data } = await axios.post(`${GET_ATTENDANCE_BY_SHIFT_DATE}`, { shiftDate: lunchHourDate });
+        setCount(data.AttendanceShiftDate.length);
+        setAttendances(data.AttendanceShiftDate);
       } catch (err) {
         setSearchEmployeeError(true);
       }
@@ -159,7 +145,7 @@ const AttendanceLunchHourModal: FC<Props> = props => {
     return () => {
       cancelTokenSource.cancel();
     };
-  }, [rowsPerPage, currentPage, queryString]);
+  }, [rowsPerPage, currentPage]);
 
   useEffect(() => {
     fetchData();
@@ -176,8 +162,15 @@ const AttendanceLunchHourModal: FC<Props> = props => {
     setLunchHourDate(new Date());
   };
 
-  const handleDateChange = (date: Date | null) => {
+  const handleDateChange = async (date: Date | null) => {
     setLunchHourDate(date);
+    try {
+      const { data } = await axios.post(`${GET_ATTENDANCE_BY_SHIFT_DATE}`, { shiftDate: date });
+      setCount(data.AttendanceShiftDate.length);
+      setAttendances(data.AttendanceShiftDate);
+    } catch (err) {
+      setSearchEmployeeError(true);
+    }
   };
 
   const handleOnSubmit: React.FormEventHandler = async event => {
@@ -187,9 +180,9 @@ const AttendanceLunchHourModal: FC<Props> = props => {
     try {
       cancelTokenSource = axios.CancelToken.source();
 
-      employees.map(async value => {
+      attendances.map(async value => {
         await axios.put(
-          `${GET_EDIT_ATTENDANCE_LUNCH_HOURS_URL(value.id)}`,
+          `${GET_EDIT_ATTENDANCE_LUNCH_HOURS_URL(value.EmployeeId)}`,
           {
             shiftDate: lunchHourDate,
             lunchHours: value.lunchHours
@@ -261,8 +254,8 @@ const AttendanceLunchHourModal: FC<Props> = props => {
         </Grid>
         <EmployeeAttendanceTable
           isLoadingData={isSearchingEmployee}
-          employees={employees}
-          setEmployees={setEmployees}
+          attendances={attendances}
+          setAttendances={setAttendances}
           count={count}
           currentPage={currentPage}
           rowsPerPage={rowsPerPage}

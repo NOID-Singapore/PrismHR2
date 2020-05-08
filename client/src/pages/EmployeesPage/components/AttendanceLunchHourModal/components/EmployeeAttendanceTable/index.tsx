@@ -6,8 +6,8 @@ import TablePagination from 'components/TablePagination';
 
 interface Props {
   isLoadingData: boolean;
-  employees: EmployeeDetailsModel[];
-  setEmployees: React.Dispatch<React.SetStateAction<EmployeeDetailsModel[]>>;
+  attendances: EmployeeAttendancesModel[];
+  setAttendances: React.Dispatch<React.SetStateAction<EmployeeAttendancesModel[]>>;
   count: number;
   currentPage: number;
   rowsPerPage: number;
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
 const EmployeeAttendanceTable: FC<Props> = props => {
   const classes = useStyles();
 
-  const { isLoadingData, employees, setEmployees, count, currentPage, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = props;
+  const { isLoadingData, attendances, setAttendances, count, currentPage, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = props;
 
   // The below logic introduces a 500ms delay for showing the skeleton
   const [showSkeleton, setShowSkeleton] = useState<boolean>(false);
@@ -58,7 +58,7 @@ const EmployeeAttendanceTable: FC<Props> = props => {
           />
         </TableHead>
         <TableBody>
-          <BodyRow employee={employees} setEmployee={setEmployees} isLoadingData={isLoadingData} />
+          <BodyRow attendance={attendances} setAttendance={setAttendances} isLoadingData={isLoadingData} />
         </TableBody>
         <TablePagination
           rowsPerPageOptions={[100, 200, 500]}

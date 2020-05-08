@@ -2,7 +2,7 @@ import { QueryTypes } from 'sequelize';
 import { format } from 'date-fns';
 import { sequelize } from '../../config/database';
 
-import { AttendanceResponseModel, EmployeeAttendanceToExportResponseModel } from '../../typings/ResponseFormats';
+import { AttendanceResponseModel, EmployeeAttendanceToExportResponseModel, EmployeeAttendanceResponseModel } from '../../typings/ResponseFormats';
 import { getAttendanceModel } from '../models';
 import Attendance from '../models/Attendance';
 import { Op } from 'sequelize';
@@ -207,4 +207,18 @@ export const getByShiftDateAndEmployeeId = async (shiftDate: Date, EmployeeId: s
 
   const shiftDateConvert = format(new Date(shiftDate), 'yyyy-MM-dd');
   return model.findOne<Attendance>({ where: { shiftDate: shiftDateConvert, EmployeeId } });
+};
+
+export const getEmployeeAttendanceBySelectedDate = async (selectedDate: string): Promise<EmployeeAttendanceResponseModel[]> => {
+  const result: EmployeeAttendanceResponseModel[] = await sequelize.query(
+    `SELECT e.name, a.* 
+     FROM "Attendance" as a
+     INNER JOIN "Employee" as e ON e.ID = a."EmployeeId"
+     WHERE to_char("shiftDate", 'dd/MM/yyyy') = '${escape(format(new Date(selectedDate), 'dd/MM/yyyy'))}'`,
+    {
+      type: QueryTypes.SELECT
+    }
+  );
+
+  return result;
 };

@@ -10,8 +10,8 @@ import BodyCell from 'components/BodyCell';
 
 interface Props {
   isLoadingData: boolean;
-  employee: EmployeeDetailsModel[];
-  setEmployee: React.Dispatch<React.SetStateAction<EmployeeDetailsModel[]>>;
+  attendance: EmployeeAttendancesModel[];
+  setAttendance: React.Dispatch<React.SetStateAction<EmployeeAttendancesModel[]>>;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -57,72 +57,74 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const BodyRow: FC<Props> = props => {
   const classes = useStyles();
-  const { isLoadingData, employee, setEmployee } = props;
+  const { isLoadingData, attendance, setAttendance } = props;
 
   const handleLunchHourChange = (luncHour: string, index: number) => {
-    const currentEmployee = [...employee];
+    const currentEmployee = [...attendance];
     currentEmployee[index].lunchHours = luncHour;
-    setEmployee(currentEmployee);
+    setAttendance(currentEmployee);
   };
 
   const renderTable = () => {
-    return employee.map((value, index) => {
-      let initialName: any = [];
+    if (attendance !== undefined) {
+      return attendance.map((value, index) => {
+        let initialName: any = [];
 
-      if (value.name) {
-        const splitedNames = value.name.split(' ');
-        splitedNames.map((splitedName, index) => {
-          if (index === 0 || index === splitedNames.length - 1) {
-            if (splitedName[0]) {
-              initialName.push(splitedName[0].toUpperCase());
-            } else {
-              initialName.push(splitedNames[index - 1][0] ? splitedNames[index - 1][0].toUpperCase() : '');
+        if (value.name) {
+          const splitedNames = value.name.split(' ');
+          splitedNames.map((splitedName, index) => {
+            if (index === 0 || index === splitedNames.length - 1) {
+              if (splitedName[0]) {
+                initialName.push(splitedName[0].toUpperCase());
+              } else {
+                initialName.push(splitedNames[index - 1][0] ? splitedNames[index - 1][0].toUpperCase() : '');
+              }
             }
-          }
-          return initialName;
-        });
-      }
+            return initialName;
+          });
+        }
 
-      return (
-        <TableRow className={classes.tableRow}>
-          <BodyCell cellWidth='10%' pR='10px' isComponent={true}>
-            <Typography variant='body1'>{isLoadingData ? <Skeleton width={150} /> : value.id}</Typography>
-          </BodyCell>
-          <BodyCell cellWidth='75%' pL='10px' pR='10px' isComponent={true}>
-            <div className={classes.tableCellInner}>
-              <div className={classes.wrapper}>
-                {isLoadingData ? (
-                  <Skeleton circle={true} height={36} width={36} />
-                ) : (
-                  <Avatar className={classes.avatar}>{initialName.join('')}</Avatar>
-                )}
+        return (
+          <TableRow className={classes.tableRow}>
+            <BodyCell cellWidth='10%' pR='10px' isComponent={true}>
+              <Typography variant='body1'>{isLoadingData ? <Skeleton width={150} /> : value.EmployeeId}</Typography>
+            </BodyCell>
+            <BodyCell cellWidth='75%' pL='10px' pR='10px' isComponent={true}>
+              <div className={classes.tableCellInner}>
+                <div className={classes.wrapper}>
+                  {isLoadingData ? (
+                    <Skeleton circle={true} height={36} width={36} />
+                  ) : (
+                    <Avatar className={classes.avatar}>{initialName.join('')}</Avatar>
+                  )}
+                </div>
+                <div className={classes.nameTextCell}>
+                  <Typography variant='body1'>{isLoadingData ? <Skeleton width={280} /> : value.name}</Typography>
+                </div>
               </div>
-              <div className={classes.nameTextCell}>
-                <Typography variant='body1'>{isLoadingData ? <Skeleton width={280} /> : value.name}</Typography>
-              </div>
-            </div>
-          </BodyCell>
-          <BodyCell cellWidth='25%' pL='10px' pR='10px' isComponent={true}>
-            <TextField
-              margin='dense'
-              fullWidth
-              id='lunchHours'
-              label='Lunch Hour'
-              value={value.lunchHours === null ? 0 : value.lunchHours}
-              onChange={event => handleLunchHourChange(event.target.value, index)}
-              variant='outlined'
-              autoComplete='off'
-              InputProps={{
-                classes: {
-                  input: classes.textFieldFont
-                },
-                inputComponent: NumberFormatCustom as any
-              }}
-            />
-          </BodyCell>
-        </TableRow>
-      );
-    });
+            </BodyCell>
+            <BodyCell cellWidth='25%' pL='10px' pR='10px' isComponent={true}>
+              <TextField
+                margin='dense'
+                fullWidth
+                id='lunchHours'
+                label='Lunch Hour'
+                value={value.lunchHours === null ? 0 : value.lunchHours}
+                onChange={event => handleLunchHourChange(event.target.value, index)}
+                variant='outlined'
+                autoComplete='off'
+                InputProps={{
+                  classes: {
+                    input: classes.textFieldFont
+                  },
+                  inputComponent: NumberFormatCustom as any
+                }}
+              />
+            </BodyCell>
+          </TableRow>
+        );
+      });
+    }
   };
   return <Fragment>{renderTable()}</Fragment>;
 };

@@ -18,6 +18,7 @@ export const GET_EMPLOYEE_BY_ID_URL = (employeeId?: string) => `${EMPLOYEE_BASE_
 
 export const ATTENDANCE_BASE_URL = `${BASE_URL}/attendances`;
 export const GET_EDIT_ATTENDANCE_LUNCH_HOURS_URL = (employeeId: string) => `${ATTENDANCE_BASE_URL}/${employeeId}`;
+export const GET_ATTENDANCE_BY_SHIFT_DATE = `${ATTENDANCE_BASE_URL}/getAttendanceByShiftDate`;
 
 export const PAY_BASE_URL = `${BASE_URL}/pays`;
 

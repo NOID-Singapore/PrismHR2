@@ -81,3 +81,17 @@ export interface EmployeeAttendanceToExportResponseModel {
   location: string;
   totalHour: string;
 }
+
+export interface EmployeeAttendanceResponseModel {
+  name: string;
+  shiftDate: Date;
+  attendanceType: string;
+  shiftStartTime: Date;
+  shiftEndTime: Date;
+  lunchHours?: number;
+  totalOtHour: number;
+  location?: string;
+  EmployeeId?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}

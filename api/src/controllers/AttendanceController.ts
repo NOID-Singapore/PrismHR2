@@ -61,8 +61,21 @@ const editAttendanceLunchHourHandler: RequestHandler = async (req, res, next) =>
   }
 };
 
+const getEmployeeAttendanceBySelectedDateHandler: RequestHandler = async (req, res, next) => {
+  try {
+    const { shiftDate } = req.body;
+
+    const attendances = await AttendanceService.getEmployeeAttendanceBySelectedDate(shiftDate);
+    return res.status(OK).json(attendances);
+  } catch (err) {
+    LOG.error(err);
+    return next(err);
+  }
+};
+
 AttendanceController.get('/', Authentication.AUTHENTICATED, searchAttendanceHandler);
 AttendanceController.post('/', Authentication.AUTHENTICATED, createAttendanceHandler);
 AttendanceController.put('/:id', Authentication.AUTHENTICATED, editAttendanceLunchHourHandler);
+AttendanceController.post('/getAttendanceByShiftDate', Authentication.AUTHENTICATED, getEmployeeAttendanceBySelectedDateHandler);
 
 export default AttendanceController;
