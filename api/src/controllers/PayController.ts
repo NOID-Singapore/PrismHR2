@@ -62,7 +62,12 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
       const otherDaysPayRate = employee.getDataValue('otherDaysPayRate');
 
       //c ot rate
-      const otPayRate = Number((((basicSalary * 12) / (52 * 44)) * 1.5).toFixed(2));
+      const otPayRate = Number(
+        (Number(((basicSalary * 12) / (52 * 44)).toFixed(2)) * 1.5).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })
+      );
 
       //totalRegularDays
       let totalRegularDays = 0;

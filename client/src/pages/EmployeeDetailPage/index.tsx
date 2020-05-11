@@ -193,7 +193,10 @@ const EmployeeDetailPage: FC = () => {
               <Skeleton width={50} />
             ) : basicSalary ? (
               <NumberFormat
-                value={(((basicSalary * 12) / (52 * 44)) * 1.5).toFixed(2)}
+                value={(Number(((basicSalary * 12) / (52 * 44)).toFixed(2)) * 1.5).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}
                 displayType={'text'}
                 thousandSeparator={true}
                 prefix={' $'}
