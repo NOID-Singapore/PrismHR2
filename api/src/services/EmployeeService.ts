@@ -113,6 +113,7 @@ export const createEmployees = async (employees: EmployeeResponseModel[]) => {
         ) * 1.5
       ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
+      console.log('otrate', otRate);
       if (!(await isEmployeeExistsById(employeeObject.id))) {
         await EmployeeDao.createEmployee(
           employeeObject.id,
