@@ -104,6 +104,15 @@ export const createEmployees = async (employees: EmployeeResponseModel[]) => {
 
   try {
     for (const employeeObject of employees) {
+      const otRate = (
+        Number(
+          Number(((employeeObject.basicSalary * 12) / (52 * 44)).toFixed(3)).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })
+        ) * 1.5
+      ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
       if (!(await isEmployeeExistsById(employeeObject.id))) {
         await EmployeeDao.createEmployee(
           employeeObject.id,
@@ -112,7 +121,7 @@ export const createEmployees = async (employees: EmployeeResponseModel[]) => {
           employeeObject.basicSalary,
           employeeObject.hourPayRate || null,
           employeeObject.otherDaysPayRate || null,
-          employeeObject.otPayRate || null,
+          Number(otRate) || null,
           employeeObject.workHourPerDay
         );
       } else {
@@ -123,7 +132,7 @@ export const createEmployees = async (employees: EmployeeResponseModel[]) => {
           employeeObject.basicSalary,
           employeeObject.hourPayRate || null,
           employeeObject.otherDaysPayRate || null,
-          employeeObject.otPayRate || null,
+          Number(otRate) || null,
           employeeObject.workHourPerDay
         );
       }

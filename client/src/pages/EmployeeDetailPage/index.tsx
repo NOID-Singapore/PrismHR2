@@ -171,7 +171,7 @@ const EmployeeDetailPage: FC = () => {
           <Typography variant='h6' display='inline'>
             {isLoadingData ? (
               <Skeleton width={50} />
-            ) : otPayRate ? (
+            ) : otherDaysPayRate ? (
               <NumberFormat
                 value={otherDaysPayRate}
                 displayType={'text'}
@@ -191,17 +191,8 @@ const EmployeeDetailPage: FC = () => {
           <Typography variant='h6' display='inline'>
             {isLoadingData ? (
               <Skeleton width={50} />
-            ) : basicSalary ? (
-              <NumberFormat
-                value={(Number(((basicSalary * 12) / (52 * 44)).toFixed(2)) * 1.5).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })}
-                displayType={'text'}
-                thousandSeparator={true}
-                prefix={' $'}
-                className={classes.contentTypography}
-              />
+            ) : otPayRate ? (
+              <NumberFormat value={otPayRate} displayType={'text'} thousandSeparator={true} prefix={' $'} className={classes.contentTypography} />
             ) : (
               <span className={classes.contentTypography}> $0</span>
             )}

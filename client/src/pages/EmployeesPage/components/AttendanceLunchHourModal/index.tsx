@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import axios, { CancelTokenSource } from 'axios';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  CircularProgress,
   Grid,
   IconButton,
   makeStyles,
@@ -145,7 +144,7 @@ const AttendanceLunchHourModal: FC<Props> = props => {
     return () => {
       cancelTokenSource.cancel();
     };
-  }, [rowsPerPage, currentPage]);
+  }, [lunchHourDate]);
 
   useEffect(() => {
     fetchData();
