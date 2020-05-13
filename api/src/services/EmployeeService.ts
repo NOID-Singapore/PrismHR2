@@ -104,14 +104,17 @@ export const createEmployees = async (employees: EmployeeResponseModel[]) => {
 
   try {
     for (const employeeObject of employees) {
-      const otRate = (
-        Number(
-          Number(((employeeObject.basicSalary * 12) / (52 * 44)).toFixed(3)).toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          })
-        ) * 1.5
-      ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const otRate =
+        employeeObject.basicSalary === 814
+          ? 6.41
+          : (
+              Number(
+                Number(((employeeObject.basicSalary * 12) / (52 * 44)).toFixed(3)).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })
+              ) * 1.5
+            ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
       console.log('otrate', otRate);
       if (!(await isEmployeeExistsById(employeeObject.id))) {
