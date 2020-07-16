@@ -140,7 +140,7 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
             totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
           } else {
             totalRegularDays++;
-            if (attendance.totalOtHour > 1.3) {
+            if (attendance.totalOtHour > 1.5) {
               totalToolbox = totalToolbox + 1;
               totalTravel = totalTravel + 0.5;
               const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
@@ -169,7 +169,7 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
             totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
           } else {
             totalRegularDays++;
-            if (attendance.totalOtHour > 1.3) {
+            if (attendance.totalOtHour > 1.5) {
               totalToolbox = totalToolbox + 1;
               totalTravel = totalTravel + 0.5;
               const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
