@@ -57,7 +57,7 @@ const EmployeeDetailPage: FC = () => {
     hourPayRate: 0,
     otherDaysPayRate: 0,
     otPayRate: 0,
-    workHourPerDay: 0,
+    regularWorkHour: 0,
     totalRegularDays: 0,
     totalExtraDays: 0,
     totalOtHours: 0,
@@ -91,7 +91,7 @@ const EmployeeDetailPage: FC = () => {
     };
   }, [params]);
 
-  const { name, position, basicSalary, otherDaysPayRate, otPayRate } = employee!;
+  const { name, position, basicSalary, otherDaysPayRate, otPayRate, regularWorkHour, saturdayWorkHour } = employee!;
 
   let initialName: any = [];
   if (name) {
@@ -148,6 +148,24 @@ const EmployeeDetailPage: FC = () => {
           </Typography>
           <Typography color='primary' variant='h6'>
             {isLoadingData ? <Skeleton width={90} /> : `${position}`}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item>
+          <Typography variant='h6' color='primary' display='inline'>
+            Work Hour Per Day:
+          </Typography>
+          <Typography variant='h6' display='inline'>
+            {isLoadingData ? <Skeleton width={50} /> : <span className={classes.contentTypography}> {regularWorkHour}</span>}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant='h6' color='primary' display='inline'>
+            Saturday Work Hour:
+          </Typography>
+          <Typography variant='h6' display='inline'>
+            {isLoadingData ? <Skeleton width={50} /> : <span className={classes.contentTypography}> {saturdayWorkHour}</span>}
           </Typography>
         </Grid>
       </Grid>

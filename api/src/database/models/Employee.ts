@@ -29,7 +29,8 @@ export default class Employee extends ModelBase {
   public hourPayRate?: number;
   public otherDaysPayRate?: number;
   public otPayRate?: number;
-  public workHourPerDay!: number;
+  public regularWorkHour!: number;
+  public saturdayWorkHour!: number;
 
   // timestamp
   public readonly createdAt!: Date;
@@ -99,7 +100,11 @@ export default class Employee extends ModelBase {
           type: DataTypes.FLOAT,
           allowNull: true
         },
-        workHourPerDay: {
+        regularWorkHour: {
+          type: DataTypes.FLOAT,
+          allowNull: false
+        },
+        saturdayWorkHour: {
           type: DataTypes.FLOAT,
           allowNull: false
         }
@@ -118,8 +123,32 @@ export default class Employee extends ModelBase {
   }
 
   public toResponseFormat(): EmployeeResponseModel {
-    const { id, name, position, basicSalary, hourPayRate, otherDaysPayRate, otPayRate, workHourPerDay, createdAt, updatedAt } = this;
+    const {
+      id,
+      name,
+      position,
+      basicSalary,
+      hourPayRate,
+      otherDaysPayRate,
+      otPayRate,
+      regularWorkHour,
+      saturdayWorkHour,
+      createdAt,
+      updatedAt
+    } = this;
 
-    return { id, name, position, basicSalary, hourPayRate, otherDaysPayRate, otPayRate, workHourPerDay, createdAt, updatedAt };
+    return {
+      id,
+      name,
+      position,
+      basicSalary,
+      hourPayRate,
+      otherDaysPayRate,
+      otPayRate,
+      regularWorkHour,
+      saturdayWorkHour,
+      createdAt,
+      updatedAt
+    };
   }
 }

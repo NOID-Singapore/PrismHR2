@@ -34,7 +34,7 @@ const EmployeeTable: FC<Props> = props => {
     hourPayRate: 0,
     otherDaysPayRate: 0,
     otPayRate: 0,
-    workHourPerDay: 0,
+    regularWorkHour: 0,
     totalRegularDays: 0,
     totalExtraDays: 0,
     totalPhDays: 0,

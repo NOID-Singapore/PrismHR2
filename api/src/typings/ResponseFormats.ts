@@ -6,7 +6,8 @@ export interface EmployeeResponseModel {
   hourPayRate: number;
   otherDaysPayRate: number;
   otPayRate: number;
-  workHourPerDay: number;
+  regularWorkHour: number;
+  saturdayWorkHour: number;
   createdAt?: Date;
   updatedAt?: Date;
 }

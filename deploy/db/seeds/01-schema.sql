@@ -111,7 +111,8 @@ CREATE TABLE prismhr2."Employee" (
     "hourPayRate" double precision DEFAULT '0'::double precision,
     "otherDaysPayRate" double precision DEFAULT '0'::double precision,
     "otPayRate" double precision DEFAULT '0'::double precision,
-    "workHourPerDay" double precision DEFAULT '0'::double precision NOT NULL,
+    "regularWorkHour" double precision DEFAULT '0'::double precision NOT NULL,
+    "saturdayWorkHour" double precision DEFAULT '0'::double precision NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL
 );

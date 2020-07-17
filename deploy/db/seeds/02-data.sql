@@ -33,7 +33,7 @@ SELECT pg_catalog.setval('prismhr2."User_id_seq"', 1, true);
 -- Data for Name: Employee; Type: TABLE DATA; Schema: prismhr2; Owner: prismhr2
 --
 
-INSERT INTO prismhr2."Employee" VALUES ('123456', 'Alex Koh', 'Staff', 1500, 10, 30, 5, 8, '2019-12-06 15:18:23+08', '2019-12-06 15:18:26+08');
+INSERT INTO prismhr2."Employee" VALUES ('123456', 'Alex Koh', 'Staff', 1500, 10, 30, 5, 8, 4, '2019-12-06 15:18:23+08', '2019-12-06 15:18:26+08');
 
 --
 -- Data for Name: Attendance; Type: TABLE DATA; Schema: prismhr2; Owner: prismhr2
