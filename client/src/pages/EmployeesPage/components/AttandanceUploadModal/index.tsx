@@ -143,6 +143,7 @@ const AttandanceUploadModal: FC<Props> = props => {
                 setDataToImport={setAttendancesToImport}
                 delimeter=','
                 attendanceType={attendanceType}
+                setLoading={setLoading}
                 setOpenSnackbar={setOpenSnackbar}
                 setSnackbarVarient={setSnackbarVarient}
                 handleSetMessageSuccess={handleSetMessageSuccess}
