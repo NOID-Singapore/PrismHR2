@@ -40,7 +40,9 @@ const getCurrentUserHandler: RequestHandler = async (req, res, next) => {
     const currentUser = await UserDao.getById(id);
 
     return res.status(OK).json({
-      displayName: currentUser.get('displayName')
+      id: currentUser.get('id'),
+      displayName: currentUser.get('displayName'),
+      loginName: currentUser.get('loginName')
     });
   } catch (err) {
     LOG.error(err);
