@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   buttonProgress: {
     position: 'absolute',
-    top: '55%',
+    top: '35%',
     left: '45%'
   }
 }));
@@ -67,24 +67,16 @@ const CsvDropZone: FC<Props> = props => {
         let attandances: AttendancesModel[] = [];
         reader.onload = () => {
           setIsLoading(true);
+          setLoading(true);
           const csvObject = csvToJson(`${reader.result}`, delimeter);
 
           let index = 0;
-          csvObject.map(object => {
-            index++;
+          try {
+            csvObject.map(object => {
+              index++;
 
-            const getDate = `${Object.values(object)[3]}` + ',' + `${Object.values(object)[4]}`;
-            const convertDate = new Date(getDate.replace(/"/g, ''));
-            if (getDate[0] === 'undefined') {
-              setOpenSnackbar(true);
-              setSnackbarVarient('error');
-              handleSetMessageError('CSV format wrong');
-              setLoading(true);
-            } else {
-              setOpenSnackbar(true);
-              setLoading(false);
-              setSnackbarVarient('success');
-              handleSetMessageSuccess('CSV format correct');
+              const getDate = `${Object.values(object)[3]}` + ',' + `${Object.values(object)[4]}`;
+              const convertDate = new Date(getDate.replace(/"/g, ''));
 
               const shiftDate = format(convertDate, 'yyyy-MM-dd');
               const shiftStartTime = `${Object.values(object)[6]}`.replace(/"/g, '');
@@ -109,17 +101,42 @@ const CsvDropZone: FC<Props> = props => {
                 location,
                 EmployeeId
               });
-            }
-            return attandances;
-          });
+
+              return attandances;
+            });
+            setOpenSnackbar(true);
+            setSnackbarVarient('success');
+            handleSetMessageSuccess('CSV format correct');
+          } catch (err) {
+            setOpenSnackbar(true);
+            setSnackbarVarient('error');
+            handleSetMessageError('CSV format wrong');
+          }
+
           setDataToImport(attandances);
-          index === csvObject.length ? setIsLoading(false) : setIsLoading(true);
+          if (index === csvObject.length) {
+            setIsLoading(false);
+            setLoading(false);
+          } else {
+            setIsLoading(true);
+            setLoading(true);
+          }
         };
         reader.readAsText(file);
       }
       setFileName(fileName);
     },
-    [delimeter, setDataToImport, attendanceType, setIsLoading, handleSetMessageError, handleSetMessageSuccess, setOpenSnackbar, setSnackbarVarient]
+    [
+      delimeter,
+      setDataToImport,
+      attendanceType,
+      setIsLoading,
+      handleSetMessageError,
+      handleSetMessageSuccess,
+      setOpenSnackbar,
+      setSnackbarVarient,
+      setLoading
+    ]
   );
 
   const { getRootProps, getInputProps } = useDropzone({

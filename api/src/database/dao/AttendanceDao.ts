@@ -124,8 +124,8 @@ export const getByShiftDateAndEmployeeIdAndType = async (shiftDate: Date, attend
 
 export const getTotalWorkDaysInMonth = async (EmployeeId: string, shiftDate: string) => {
   const period = new Date(shiftDate);
-  const firstDate = format(new Date(period.getFullYear(), period.getMonth(), 1), 'yyyy-MM-dd');
-  const lastDate = format(new Date(period.getFullYear(), period.getMonth() + 1, 0), 'yyyy-MM-dd');
+  const firstDate = format(new Date(period.getFullYear(), period.getMonth() - 1, 16), 'yyyy-MM-dd');
+  const lastDate = format(new Date(period.getFullYear(), period.getMonth(), 15), 'yyyy-MM-dd');
   const result: CountQueryReturn = await sequelize.query(
     `SELECT DISTINCT count(*)
     FROM prismhr2."Attendance"
