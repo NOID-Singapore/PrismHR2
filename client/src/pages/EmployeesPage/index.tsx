@@ -302,7 +302,7 @@ const EmployeesPage: FC = () => {
       let deskeraCsvData: ExportDeskeraEmployeePay[] = [];
       for (const data of result.data.employeePay) {
         deskeraCsvData.push({
-          userName: data.name,
+          userId: data.id,
           basicPay: data.totalRegularPay,
           totalExtraDaysPay: data.totalExtraDaysPay,
           totalPhDaysPay: data.totalPhDaysPay,
@@ -420,7 +420,7 @@ const EmployeesPage: FC = () => {
       let deskeraCsvData: ExportDeskeraEmployeePay[] = [];
       for (const data of result.data.employeePay) {
         deskeraCsvData.push({
-          userName: data.name,
+          userId: data.id,
           basicPay: data.totalRegularPay,
           totalExtraDaysPay: data.totalExtraDaysPay,
           totalPhDaysPay: data.totalPhDaysPay,

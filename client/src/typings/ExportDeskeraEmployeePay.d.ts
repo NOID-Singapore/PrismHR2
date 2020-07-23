@@ -1,5 +1,5 @@
 interface ExportDeskeraEmployeePay {
-  userName: string;
+  userId: string;
   basicPay: number;
   totalExtraDaysPay: number;
   totalPhDaysPay: number;
