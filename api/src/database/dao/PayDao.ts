@@ -196,3 +196,9 @@ export const countByBySelectedMonth = (selectedMonth: string) => {
   const monthYear = format(new Date(selectedMonth), 'MM/yyyy');
   return model.count({ where: { monthYear } });
 };
+
+export const getPayLastMonth = () => {
+  const model = getPayModel();
+
+  return model.findOne({ order: [['monthYear', 'DESC']] });
+};

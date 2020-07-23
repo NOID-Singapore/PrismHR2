@@ -394,6 +394,7 @@ const EmployeesPage: FC = () => {
       });
       setDefaultHeaders(defaultCsvHeaders);
       setDefaultEmployeePay(defaultCsvData);
+      fetchData();
     } catch (err) {
       console.log(err);
     }

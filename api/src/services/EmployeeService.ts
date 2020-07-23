@@ -1,9 +1,11 @@
 import Logger from '../Logger';
 import * as EmployeeDao from '../database/dao/EmployeeDao';
+import * as PayDao from '../database/dao/PayDao';
 import EmployeeNotFoundError from '../errors/EmployeeNotFoundError';
 import Employee from '../database/models/Employee';
 
 import { EmployeeResponseModel } from '../typings/ResponseFormats';
+import { format } from 'date-fns';
 
 const LOG = new Logger('EmployeeService');
 
@@ -22,7 +24,9 @@ export const globalSearchEmployees = async (q?: string) => {
  */
 export const searchEmployeesWithPagination = async (offset: number, limit?: number, q?: string) => {
   LOG.debug('Searching Employees with Pagination');
-  return await EmployeeDao.getPaginated(offset, limit, q);
+  const payLastMonth = await PayDao.getPayLastMonth();
+  const lastMonth = payLastMonth !== null ? payLastMonth.getDataValue('monthYear') : format(new Date(), 'MM/yyyy');
+  return await EmployeeDao.getPaginated(offset, limit, lastMonth, q);
 };
 
 /**
@@ -145,7 +149,9 @@ export const createEmployees = async (employees: EmployeeResponseModel[]) => {
     }
     const offset = 0;
     const limit = 10;
-    return await EmployeeDao.getPaginated(offset, limit);
+    const payLastMonth = await PayDao.getPayLastMonth();
+    const lastMonth = payLastMonth !== null ? payLastMonth.getDataValue('monthYear') : format(new Date(), 'MM/yyyy');
+    return await EmployeeDao.getPaginated(offset, limit, lastMonth);
   } catch (err) {
     throw err;
   }
