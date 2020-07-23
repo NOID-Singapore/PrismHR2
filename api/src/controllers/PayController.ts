@@ -149,7 +149,7 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
               totalOtHours = totalOtHours + otHours;
               totalOtPay = totalOtPay + otHours * otPayRate;
               totalRegularPay = totalRegularPay + otHours * otPayRate;
-            } else {
+            } else if (attendance.totalOtHour > 1) {
               totalToolbox = totalToolbox + attendance.totalOtHour;
               const otHours = attendance.totalOtHour - 1;
               totalOtHours = totalOtHours + otHours;
@@ -178,7 +178,7 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
               totalOtHours = totalOtHours + otHours;
               totalOtPay = totalOtPay + otHours * otPayRate;
               totalRegularPay = totalRegularPay + otHours * otPayRate;
-            } else {
+            } else if (attendance.totalOtHour > 1) {
               totalToolbox = totalToolbox + attendance.totalOtHour;
               const otHours = attendance.totalOtHour - 1;
               totalOtHours = totalOtHours + otHours;
