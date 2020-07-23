@@ -151,7 +151,7 @@ const AttandanceUploadModal: FC<Props> = props => {
               />
             </Grid>
             <Grid container item justify='flex-end'>
-              <Button variant='contained' className={classes.cancelButton} onClick={handleOnClose} disabled={isLoading}>
+              <Button variant='contained' className={classes.cancelButton} onClick={handleOnClose}>
                 Cancel
               </Button>
               <Button type='submit' variant='contained' color='secondary' disabled={isLoading}>
