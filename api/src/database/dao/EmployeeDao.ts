@@ -1,5 +1,4 @@
 import { Op, QueryTypes } from 'sequelize';
-import { format } from 'date-fns';
 
 import Employee from '../models/Employee';
 
