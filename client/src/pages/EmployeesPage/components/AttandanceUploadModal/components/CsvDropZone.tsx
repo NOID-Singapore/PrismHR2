@@ -4,7 +4,7 @@ import UploadIcon from '@material-ui/icons/CloudUpload';
 import { useDropzone } from 'react-dropzone';
 import { CircularProgress, Grid, makeStyles, Paper, RootRef, Theme, Typography } from '@material-ui/core';
 import { csvToJson } from 'utils';
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 
 interface Props {
   label: string;
@@ -75,20 +75,24 @@ const CsvDropZone: FC<Props> = props => {
             csvObject.map(object => {
               index++;
 
-              const getDate = `${Object.values(object)[3]}` + ',' + `${Object.values(object)[4]}`;
-              const convertDate = new Date(getDate.replace(/"/g, ''));
+              // const getDate = `${Object.values(object)[3]}` + ',' + `${Object.values(object)[4]}`;
+              const getDate = `${Object.values(object)[3]}`.split(' ');
 
-              const shiftDate = format(convertDate, 'yyyy-MM-dd');
-              const shiftStartTime = `${Object.values(object)[6]}`.replace(/"/g, '');
-              const shiftEndTime = `${Object.values(object)[7]}`.replace(/"/g, '');
+              // const convertDate = new Date(getDate.replace(/"/g, ''));
+              const convertDate = getDate[0].replace(/"/g, '');
+              const shiftDate = convertDate.split('-').reverse().join("-");
 
-              const getTotalOtHour = `${Object.values(object)[11]}`.replace(/"/g, '');
+              // const shiftDate = format(convertDate, 'yyyy-MM-dd');
+              const shiftStartTime = `${Object.values(object)[5]}`.replace(/"/g, '');
+              const shiftEndTime = `${Object.values(object)[6]}`.replace(/"/g, '');
+
+              const getTotalOtHour = `${Object.values(object)[10]}`.replace(/"/g, '');
               const splitTotalHour = getTotalOtHour.split(':');
               const getHour = Number(splitTotalHour[0]);
               const getMinute = Number(splitTotalHour[1]) / 60;
               const totalOtHour = getHour + getMinute;
 
-              const location = `${Object.values(object)[15]}`.replace(/"/g, '');
+              const location = `${Object.values(object)[14]}`.replace(/"/g, '');
               const EmployeeId = `${Object.values(object)[0]}`.replace(/"/g, '');
 
               attandances.push({
