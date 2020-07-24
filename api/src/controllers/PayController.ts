@@ -129,16 +129,25 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
               phDate = holiday;
             }
           });
+
+          const startTime = new Date(attendance.shiftDate + ' ' + attendance.shiftStartTime);
+          const endTime = new Date(attendance.shiftDate + ' ' + attendance.shiftEndTime);
+          const workTime = endTime.getHours() - startTime.getHours();
+
           if (getDay === 0) {
-            totalExtraDays++;
-            totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
-            totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
-            totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
+            if (workTime > 0) {
+              totalExtraDays++;
+              totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
+              totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
+              totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
+            }
           } else if (attendance.shiftDate === phDate) {
-            totalPhDays++;
-            totalPhDaysOt = totalPhDaysOt + attendance.totalOtHour;
-            totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
-            totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
+            if (workTime > 0) {
+              totalPhDays++;
+              totalPhDaysOt = totalPhDaysOt + attendance.totalOtHour;
+              totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
+              totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
+            }
           } else {
             totalRegularDays++;
             if (attendance.totalOtHour > 1.5) {
@@ -163,11 +172,18 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
         AttendanceShiftDate.map(attendance => {
           const convertToDate = new Date(attendance.shiftDate);
           const getDay = convertToDate.getDay();
+
+          const startTime = new Date(attendance.shiftDate + ' ' + attendance.shiftStartTime);
+          const endTime = new Date(attendance.shiftDate + ' ' + attendance.shiftEndTime);
+          const workTime = endTime.getHours() - startTime.getHours();
+
           if (getDay === 0) {
-            totalExtraDays++;
-            totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
-            totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
-            totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
+            if (workTime > 0) {
+              totalExtraDays++;
+              totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
+              totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
+              totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
+            }
           } else {
             totalRegularDays++;
             if (attendance.totalOtHour > 1.5) {
