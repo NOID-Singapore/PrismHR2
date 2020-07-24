@@ -130,19 +130,15 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
             }
           });
           if (getDay === 0) {
-            if (Number(attendance.shiftStartTime) > 0) {
-              totalExtraDays++;
-              totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
-              totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
-              totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
-            }
+            totalExtraDays++;
+            totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
+            totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
+            totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
           } else if (attendance.shiftDate === phDate) {
-            if (Number(attendance.shiftStartTime) > 0) {
-              totalPhDays++;
-              totalPhDaysOt = totalPhDaysOt + attendance.totalOtHour;
-              totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
-              totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
-            }
+            totalPhDays++;
+            totalPhDaysOt = totalPhDaysOt + attendance.totalOtHour;
+            totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
+            totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
           } else {
             totalRegularDays++;
             if (attendance.totalOtHour > 1.5) {
@@ -168,12 +164,10 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
           const convertToDate = new Date(attendance.shiftDate);
           const getDay = convertToDate.getDay();
           if (getDay === 0) {
-            if (Number(attendance.shiftStartTime) > 0) {
-              totalExtraDays++;
-              totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
-              totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
-              totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
-            }
+            totalExtraDays++;
+            totalExtraDaysOt = totalExtraDaysOt + attendance.totalOtHour;
+            totalExtraDaysPay = totalExtraDaysPay + otherDaysPayRate;
+            totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
           } else {
             totalRegularDays++;
             if (attendance.totalOtHour > 1.5) {
