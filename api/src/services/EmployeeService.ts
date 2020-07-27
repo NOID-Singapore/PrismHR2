@@ -150,7 +150,7 @@ export const createEmployees = async (employees: EmployeeResponseModel[]) => {
     const offset = 0;
     const limit = 10;
     const payLastMonth = await PayDao.getPayLastMonth();
-    const lastMonth = payLastMonth !== null ? payLastMonth.getDataValue('monthYear') : format(new Date(), 'MM/yyyy');
+    const lastMonth = payLastMonth !== null ? payLastMonth.getDataValue('monthYear') : '';
     return await EmployeeDao.getPaginated(offset, limit, lastMonth);
   } catch (err) {
     throw err;
