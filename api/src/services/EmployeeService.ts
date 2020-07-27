@@ -5,7 +5,6 @@ import EmployeeNotFoundError from '../errors/EmployeeNotFoundError';
 import Employee from '../database/models/Employee';
 
 import { EmployeeResponseModel } from '../typings/ResponseFormats';
-import { format } from 'date-fns';
 
 const LOG = new Logger('EmployeeService');
 
