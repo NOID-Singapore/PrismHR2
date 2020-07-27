@@ -153,8 +153,6 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
             if (attendance.totalOtHour > 1.5) {
               totalToolbox = totalToolbox + 1;
               totalTravel = totalTravel + 0.5;
-              const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
-              totalLunchHours = totalLunchHours + lunchHours;
               const otHours = attendance.totalOtHour - 1 - 0.5;
               totalOtHours = totalOtHours + otHours;
               totalOtPay = totalOtPay + otHours * otPayRate;
@@ -167,6 +165,9 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
               totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
             }
           }
+
+          const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
+          totalLunchHours = totalLunchHours + lunchHours;
         });
       } else {
         AttendanceShiftDate.map(attendance => {
@@ -189,8 +190,6 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
             if (attendance.totalOtHour > 1.5) {
               totalToolbox = totalToolbox + 1;
               totalTravel = totalTravel + 0.5;
-              const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
-              totalLunchHours = totalLunchHours + lunchHours;
               const otHours = attendance.totalOtHour - 1 - 0.5;
               totalOtHours = totalOtHours + otHours;
               totalOtPay = totalOtPay + otHours * otPayRate;
@@ -203,6 +202,9 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
               totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
             }
           }
+
+          const lunchHours = attendance.lunchHours === undefined ? 0 : attendance.lunchHours;
+          totalLunchHours = totalLunchHours + lunchHours;
         });
       }
 
