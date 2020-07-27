@@ -6,7 +6,7 @@ import { getEmployeeModel } from '../models';
 import { sequelize } from '../../config/database';
 import { EmployeeDetailsResponseModel } from '../../typings/ResponseFormats';
 
-export const getPaginated = async (offset: number, limit: number, lastMonth: string, q: string = '') => {
+export const getPaginated = async (offset: number, limit: number, lastMonth: string, q?: string) => {
   const [count, rows] = await Promise.all([getCount(lastMonth, q), get(offset, limit, lastMonth, q)]);
 
   return { rows, count };
@@ -54,14 +54,18 @@ const generateWhereQuery = (lastMonth: string, q?: string): string => {
   const conditions: string[] = [];
 
   if (!q) {
-    conditions.push(`p."monthYear" = '${lastMonth}'`);
+    if (lastMonth !== '') {
+      conditions.push(`WHERE p."monthYear" = '${lastMonth}'`);
+    }
   }
 
   if (q) {
-    conditions.push(`(e."id" ILIKE '%${q}%' OR e."name" ILIKE '%${q}%') AND p."monthYear" = '${lastMonth}'`);
+    if (lastMonth !== '') {
+      conditions.push(`WHERE (e."id" ILIKE '%${q}%' OR e."name" ILIKE '%${q}%') AND p."monthYear" = '${lastMonth}'`);
+    }
   }
 
-  return `WHERE ${conditions.join('')}`;
+  return conditions.join('');
 };
 
 const generateOffsetAndLimit = (offset?: number, limit?: number): string => {

@@ -25,7 +25,7 @@ export const globalSearchEmployees = async (q?: string) => {
 export const searchEmployeesWithPagination = async (offset: number, limit?: number, q?: string) => {
   LOG.debug('Searching Employees with Pagination');
   const payLastMonth = await PayDao.getPayLastMonth();
-  const lastMonth = payLastMonth !== null ? payLastMonth.getDataValue('monthYear') : format(new Date(), 'MM/yyyy');
+  const lastMonth = payLastMonth !== null ? payLastMonth.getDataValue('monthYear') : '';
   return await EmployeeDao.getPaginated(offset, limit, lastMonth, q);
 };
 
