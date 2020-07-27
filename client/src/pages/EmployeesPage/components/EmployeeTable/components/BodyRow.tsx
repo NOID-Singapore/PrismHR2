@@ -62,6 +62,7 @@ const BodyRow: FC<Props> = props => {
     totalExtraDays,
     totalPhDays,
     totalOtHours,
+    totalLunchHours,
     totalExtraDaysOt,
     totalPhDaysOt,
     totalExtraDaysPay,
@@ -127,6 +128,9 @@ const BodyRow: FC<Props> = props => {
         </BodyCell>
         <BodyCell cellWidth='10%' pL='10px' pR='10px' isComponent={true}>
           <Typography variant='body1'>{totalOtHours ? `${totalOtHours}` : '-'}</Typography>
+        </BodyCell>
+        <BodyCell cellWidth='10%' pL='10px' pR='10px' isComponent={true}>
+          <Typography variant='body1'>{totalLunchHours ? `${totalLunchHours}` : '-'}</Typography>
         </BodyCell>
         <BodyCell cellWidth='10%' pL='10px' pR='10px' isComponent={true}>
           <Typography variant='body1'>{totalExtraDaysOt ? `${totalExtraDaysOt}` : '-'}</Typography>

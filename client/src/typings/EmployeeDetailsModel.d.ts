@@ -6,7 +6,7 @@ interface EmployeeDetailsModel {
   hourPayRate?: number;
   otherDaysPayRate?: number;
   otPayRate?: number;
-  lunchHours?: string;
+  totalLunchHours?: number;
   regularWorkHour?: number;
   saturdayWorkHour?: number;
   totalRegularDays?: number;
