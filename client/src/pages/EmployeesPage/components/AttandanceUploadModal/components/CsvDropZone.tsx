@@ -4,7 +4,7 @@ import UploadIcon from '@material-ui/icons/CloudUpload';
 import { useDropzone } from 'react-dropzone';
 import { CircularProgress, Grid, makeStyles, Paper, RootRef, Theme, Typography } from '@material-ui/core';
 import { csvToJson } from 'utils';
-import { format, parse } from 'date-fns';
+import { format } from 'date-fns';
 
 interface Props {
   label: string;

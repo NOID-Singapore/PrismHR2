@@ -2,20 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import axios, { CancelTokenSource } from 'axios';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Grid,
-  IconButton,
-  makeStyles,
-  Theme,
-  Typography,
-  withStyles
-} from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogTitle, Divider, Grid, IconButton, makeStyles, Theme, Typography, withStyles } from '@material-ui/core';
 import { orange } from '@material-ui/core/colors';
 
 import EmployeeAttendanceTable from './components/EmployeeAttendanceTable';
@@ -68,6 +55,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   subHeader: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(3)
+  },
+  buttoneHeader: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(3),
+    textAlign: 'center'
   },
   tableWrapper: {
     overflowX: 'auto'
@@ -250,6 +242,14 @@ const AttendanceLunchHourModal: FC<Props> = props => {
               />
             </MuiPickersUtilsProvider>
           </Grid>
+          <Grid item xs={4} className={classes.buttoneHeader}>
+            <Button variant='contained' className={classes.cancelButton} onClick={handleOnClose}>
+              Cancel
+            </Button>
+            <SaveButton variant='contained' className={classes.nextButton} onClick={handleOnSubmit} disabled={isLoading}>
+              Save
+            </SaveButton>
+          </Grid>
         </Grid>
         <EmployeeAttendanceTable
           isLoadingData={isSearchingEmployee}
@@ -262,16 +262,6 @@ const AttendanceLunchHourModal: FC<Props> = props => {
           handleChangeRowsPerPage={event => performActionAndRevertPage(setRowsPerPage, +event.target.value)}
         />
       </DialogContent>
-      <DialogActions>
-        <Grid container item justify='center' xs={12} sm={12} md={12} lg={12} xl={12} className={classes.controlDiv}>
-          <Button variant='contained' className={classes.cancelButton} onClick={handleOnClose}>
-            Cancel
-          </Button>
-          <SaveButton variant='contained' className={classes.nextButton} onClick={handleOnSubmit} disabled={isLoading}>
-            Save
-          </SaveButton>
-        </Grid>
-      </DialogActions>
     </Dialog>
   );
 };
