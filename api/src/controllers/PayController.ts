@@ -47,9 +47,10 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
     const { holidays } = await HolidayService.getAllHoliday();
     const holidayArray: any = [];
     holidays.map(holiday => {
-      if (format(new Date(selectedMonth), 'yyyy-MM') === format(new Date(holiday.getDataValue('holidayDate')), 'yyyy-MM')) {
-        holidayArray.push(holiday.getDataValue('holidayDate'));
-      }
+      holidayArray.push(holiday.getDataValue('holidayDate'));
+      // if (format(new Date(selectedMonth), 'yyyy-MM') === format(new Date(holiday.getDataValue('holidayDate')), 'yyyy-MM')) {
+      //   holidayArray.push(holiday.getDataValue('holidayDate'));
+      // }
     });
 
     const promises = employees.map(async employee => {
@@ -133,6 +134,7 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
           const startTime = new Date(attendance.shiftDate + ' ' + attendance.shiftStartTime);
           const endTime = new Date(attendance.shiftDate + ' ' + attendance.shiftEndTime);
           const workTime = endTime.getHours() - startTime.getHours();
+          console.log('work time', workTime);
 
           if (getDay === 0) {
             if (workTime > 0) {
@@ -143,6 +145,7 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
             }
           } else if (attendance.shiftDate === phDate) {
             if (workTime > 0) {
+              console.log('ph date 2', phDate);
               totalPhDays++;
               totalPhDaysOt = totalPhDaysOt + attendance.totalOtHour;
               totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
