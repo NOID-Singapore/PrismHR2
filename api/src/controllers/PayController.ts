@@ -153,16 +153,16 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
             }
           } else {
             totalRegularDays++;
-            if (attendance.totalOtHour > 1.5) {
+            if (attendance.totalOtHour >= 2) {
               totalToolbox = totalToolbox + 1;
               totalTravel = totalTravel + 0.5;
               const otHours = attendance.totalOtHour - 1 - 0.5;
               totalOtHours = totalOtHours + otHours;
               totalOtPay = totalOtPay + otHours * otPayRate;
               totalRegularPay = totalRegularPay + otHours * otPayRate;
-            } else if (attendance.totalOtHour > 1) {
-              totalToolbox = totalToolbox + attendance.totalOtHour;
-              const otHours = attendance.totalOtHour - 1;
+            } else {
+              // totalToolbox = totalToolbox + attendance.totalOtHour;
+              const otHours = attendance.totalOtHour;
               totalOtHours = totalOtHours + otHours;
               totalOtPay = totalOtPay + otHours * otPayRate;
               totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
@@ -190,16 +190,16 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
             }
           } else {
             totalRegularDays++;
-            if (attendance.totalOtHour > 1.5) {
+            if (attendance.totalOtHour >= 2) {
               totalToolbox = totalToolbox + 1;
               totalTravel = totalTravel + 0.5;
               const otHours = attendance.totalOtHour - 1 - 0.5;
               totalOtHours = totalOtHours + otHours;
               totalOtPay = totalOtPay + otHours * otPayRate;
               totalRegularPay = totalRegularPay + otHours * otPayRate;
-            } else if (attendance.totalOtHour > 1) {
-              totalToolbox = totalToolbox + attendance.totalOtHour;
-              const otHours = attendance.totalOtHour - 1;
+            } else {
+              // totalToolbox = totalToolbox + attendance.totalOtHour;
+              const otHours = attendance.totalOtHour;
               totalOtHours = totalOtHours + otHours;
               totalOtPay = totalOtPay + otHours * otPayRate;
               totalRegularPay = totalRegularPay + attendance.totalOtHour * otPayRate;
