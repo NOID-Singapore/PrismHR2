@@ -1,7 +1,6 @@
 import express, { RequestHandler } from 'express';
 import { OK } from 'http-status-codes';
 import { Authentication } from '../config/passport';
-import { format } from 'date-fns';
 
 import Logger from '../Logger';
 import * as PayService from '../services/PayService';
@@ -122,6 +121,7 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
 
       if (holidayArray.length > 0) {
         AttendanceShiftDate.map(attendance => {
+          console.log('shift', attendance.shiftDate);
           const convertToDate = new Date(attendance.shiftDate);
           const getDay = convertToDate.getDay();
           let phDate;
@@ -134,7 +134,6 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
           const startTime = new Date(attendance.shiftDate + ' ' + attendance.shiftStartTime);
           const endTime = new Date(attendance.shiftDate + ' ' + attendance.shiftEndTime);
           const workTime = endTime.getHours() - startTime.getHours();
-          console.log('work time', workTime);
 
           if (getDay === 0) {
             if (workTime > 0) {
@@ -144,13 +143,10 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
               totalExtraDaysOtPay = totalExtraDaysOtPay + attendance.totalOtHour * otPayRate;
             }
           } else if (attendance.shiftDate === phDate) {
-            if (workTime > 0) {
-              console.log('ph date 2', phDate);
-              totalPhDays++;
-              totalPhDaysOt = totalPhDaysOt + attendance.totalOtHour;
-              totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
-              totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
-            }
+            totalPhDays++;
+            totalPhDaysOt = totalPhDaysOt + attendance.totalOtHour;
+            totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
+            totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
           } else {
             totalRegularDays++;
             if (attendance.totalOtHour >= 2) {
