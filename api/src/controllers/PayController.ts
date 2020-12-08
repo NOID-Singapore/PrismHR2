@@ -145,7 +145,11 @@ const calculatePayHandler: RequestHandler = async (req, res, next) => {
           } else if (attendance.shiftDate === phDate) {
             totalPhDays++;
             totalPhDaysOt = totalPhDaysOt + attendance.totalOtHour;
-            totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
+            if (getDay === 6) {
+              totalPhDaysPay = totalPhDaysPay + otherDaysPayRate / 2;
+            } else {
+              totalPhDaysPay = totalPhDaysPay + otherDaysPayRate;
+            }
             totalPhDaysOtPay = totalPhDaysOtPay + attendance.totalOtHour * otPayRate;
           } else {
             totalRegularDays++;
